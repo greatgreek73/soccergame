@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Создать клуб</title>
+</head>
+<body>
+    <h1>Создать новый клуб</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Название клуба:</label>
+        <input type="text" id="name" name="name">
+        
+        <label for="country">Страна клуба:</label>
+        <select id="country" name="country">
+            <option value="Russia">Россия</option>
+            <option value="USA">США</option>
+            <!-- Добавьте другие страны -->
+        </select>
+        
+        <button type="submit">Создать клуб</button>
+    </form>
+</body>
+</html>

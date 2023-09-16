@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Детали клуба</title>
+</head>
+<body>
+    <h1>Добро пожаловать в ваш клуб!</h1>
+    <p>Название клуба: {{ club.name }}</p>
+    <p>Страна клуба: {{ club.country }}</p>
+
+    <h2>Список игроков</h2>
+    <ol>
+        {% for player in club.player_set.all %}
+            <li><a href="{% url 'player_detail' player.id %}">{{ player.name }}</a></li>
+        {% endfor %}
+    </ol>
+
+    <!-- Кнопка для регистрации игрока -->
+    <form action="{% url 'generate_player_for_club' club.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Регистрация игрока</button>
+    </form>
+</body>
+</html>
