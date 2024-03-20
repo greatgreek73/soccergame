@@ -59,7 +59,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'fmdb',  # Замените на имя вашей базы данных
         'USER': 'fmdb_user',  # Замените на имя пользователя базы данных
-        'PASSWORD': '5x9t8zy5',  # Замените на пароль от базы данных
+        'PASSWORD': 'sFQ0OPF7hKKju9LWi4L5bby6X9q3vEUa',  # Замените на пароль от базы данных
         'HOST': 'dpg-cnthjuvsc6pc73cbgaug-a',  # Замените на хост из настроек Render
         'PORT': '5432',  # Порт для PostgreSQL
     }
