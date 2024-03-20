@@ -56,13 +56,15 @@ WSGI_APPLICATION = 'newsoccergame.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'NikolaosQuarry$FMDB', 
-        'USER': 'NikolaosQuarry',
-        'HOST': 'NikolaosQuarry.mysql.pythonanywhere-services.com',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fmdb',  # Замените на имя вашей базы данных
+        'USER': 'fmdb_user',  # Замените на имя пользователя базы данных
+        'PASSWORD': '5x9t8zy5',  # Замените на пароль от базы данных
+        'HOST': 'dpg-cnthjuvsc6pc73cbgaug-a',  # Замените на хост из настроек Render
+        'PORT': '5432',  # Порт для PostgreSQL
     }
 }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
