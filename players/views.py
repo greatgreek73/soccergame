@@ -9,10 +9,13 @@ from django.contrib.auth.decorators import login_required
 
 # fake = Faker()
 
+def index(request):
+    return render(request, 'index.html')
+
 def generate_player(request):
     if request.method == 'POST':
         Player.objects.create(
-            name=f"{fake.last_name()} {fake.first_name()}",
+            name=f"{fake.last_name_male()} {fake.first_name_male()}",
             age=17
         )
         return HttpResponseRedirect('/generate/')
@@ -37,7 +40,12 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/')
+            # Check if the user has a club
+            try:
+                club = Club.objects.get(user=user)
+                return redirect('club_detail', club_id=club.id)
+            except Club.DoesNotExist:
+                return redirect('create_club')
         else:
             return render(request, 'login.html', {'error': 'Invalid credentials'})
     return render(request, 'login.html')
@@ -61,10 +69,10 @@ def create_club(request):
     if request.method == 'POST':
         form = CreateClubForm(request.POST)
         if form.is_valid():
-            # Проверка наличия клуба у пользователя
+            # Check if the user already has a club
             existing_club = Club.objects.filter(user=request.user).first()
             if existing_club:
-                # Если клуб уже существует, перенаправляем на его страницу
+                # If the club already exists, redirect to the club page
                 return redirect('club_detail', club_id=existing_club.id)
             
             new_club = Club.objects.create(
@@ -86,7 +94,7 @@ def generate_player_for_club(request, club_id):
     if club.user != request.user:
         return redirect('home')
 
-    # Словарь для сопоставления стран и локализаций Faker
+    # Dictionary for mapping countries to Faker locales
     country_to_locale = {
     'USA': 'en_US',
     'Russia': 'ru_RU',
@@ -95,12 +103,16 @@ def generate_player_for_club(request, club_id):
     'New Zealand': 'en_NZ',
     'Austria': 'de_AT',
     'Brazil': 'pt_BR',
-    # ... добавьте другие страны
-    }
+    'Greece': 'el_GR',
+    'Argentina': 'es_AR',
+    'Italy': 'it_IT',
+    'Germany': 'de_DE',
+    # Add more countries as needed
+}
 
     print(f"Club country: {club.country}")
-    # Устанавливаем локализацию для Faker в зависимости от страны клуба
-    locale = country_to_locale.get(club.country, 'en_US')  # 'en_US' будет использоваться по умолчанию
+    # Set Faker locale based on the club's country
+    locale = country_to_locale.get(club.country, 'en_US')  # 'en_US' will be used as default
     print(f"Using locale: {locale}")
     
     fake = Faker(locale)
@@ -109,7 +121,7 @@ def generate_player_for_club(request, club_id):
         name=f"{fake.last_name_male()} {fake.first_name_male()}",
         age=17,
         club=club,
-        nationality=club.country  # Устанавливаем национальность игрока в соответствии со страной клуба
+        nationality=club.country  # Set player nationality based on club's country
     )
     return redirect('club_detail', club_id=club.id)
 
@@ -119,5 +131,3 @@ def player_detail(request, player_id):
         'player': player
     }
     return render(request, 'player_detail.html', context)
-
-
