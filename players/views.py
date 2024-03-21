@@ -3,9 +3,11 @@ from django.shortcuts import render, redirect
 from .models import Player, Club
 from faker import Faker
 from django.contrib import messages
-from .forms import UserRegisterForm, CreateClubForm
+from .forms import UserRegisterForm, CreateClubForm, GeneratePlayerForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+import random
+from .match_engine.engine import simulate_match
 
 # fake = Faker()
 
@@ -14,12 +16,18 @@ def index(request):
 
 def generate_player(request):
     if request.method == 'POST':
-        Player.objects.create(
-            name=f"{fake.last_name_male()} {fake.first_name_male()}",
-            age=17
-        )
-        return HttpResponseRedirect('/generate/')
-    return render(request, 'generate_player.html')
+        form = GeneratePlayerForm(request.POST)
+        if form.is_valid():
+            position = form.cleaned_data['position']
+            Player.objects.create(
+                name=f"{fake.last_name_male()} {fake.first_name_male()}",
+                age=17,
+                position=position
+            )
+            return HttpResponseRedirect('/generate/')
+    else:
+        form = GeneratePlayerForm()
+    return render(request, 'generate_player.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
@@ -61,7 +69,8 @@ def home(request):
 def club_detail(request, club_id):
     club = Club.objects.get(id=club_id)
     context = {
-        'club': club
+        'club': club,
+        'form': GeneratePlayerForm()
     }
     return render(request, 'club_detail.html', context)
 
@@ -94,36 +103,60 @@ def generate_player_for_club(request, club_id):
     if club.user != request.user:
         return redirect('home')
 
-    # Dictionary for mapping countries to Faker locales
-    country_to_locale = {
-    'USA': 'en_US',
-    'Russia': 'ru_RU',
-    'China': 'zh_CN',
-    'Belgium': 'nl_BE',
-    'New Zealand': 'en_NZ',
-    'Austria': 'de_AT',
-    'Brazil': 'pt_BR',
-    'Greece': 'el_GR',
-    'Argentina': 'es_AR',
-    'Italy': 'it_IT',
-    'Germany': 'de_DE',
-    # Add more countries as needed
-}
+    if request.method == 'POST':
+        form = GeneratePlayerForm(request.POST)
+        if form.is_valid():
+            position = form.cleaned_data['position']
 
-    print(f"Club country: {club.country}")
-    # Set Faker locale based on the club's country
-    locale = country_to_locale.get(club.country, 'en_US')  # 'en_US' will be used as default
-    print(f"Using locale: {locale}")
-    
-    fake = Faker(locale)
+            # Dictionary for mapping countries to Faker locales
+            country_to_locale = {
+                'USA': 'en_US',
+                'Russia': 'ru_RU',
+                'China': 'zh_CN',
+                'Belgium': 'nl_BE',
+                'New Zealand': 'en_NZ',
+                'Austria': 'de_AT',
+                'Brazil': 'pt_BR',
+                'Greece': 'el_GR',
+                'Argentina': 'es_AR',
+                'Italy': 'it_IT',
+                'Germany': 'de_DE',
+                # Add more countries as needed
+            }
 
-    Player.objects.create(
-        name=f"{fake.last_name_male()} {fake.first_name_male()}",
-        age=17,
-        club=club,
-        nationality=club.country  # Set player nationality based on club's country
-    )
-    return redirect('club_detail', club_id=club.id)
+            print(f"Club country: {club.country}")
+            # Set Faker locale based on the club's country
+            locale = country_to_locale.get(club.country, 'en_US')  # 'en_US' will be used as default
+            print(f"Using locale: {locale}")
+
+            fake = Faker(locale)
+
+            if position == 'Goalkeeper':
+                player = Player.objects.create(
+                    name=f"{fake.last_name_male()} {fake.first_name_male()}",
+                    age=17,
+                    club=club,
+                    nationality=club.country,
+                    position=position
+                )
+            else:
+                player = Player.objects.create(
+                    name=f"{fake.last_name_male()} {fake.first_name_male()}",
+                    age=17,
+                    club=club,
+                    nationality=club.country,
+                    position=position,
+                    shooting=random.randint(1, 20),
+                    passing=random.randint(1, 20),
+                    speed=random.randint(1, 20)
+                )
+
+            return redirect('club_detail', club_id=club.id)
+    else:
+        form = GeneratePlayerForm()
+
+    context = {'form': form}
+    return render(request, 'generate_player.html', context)
 
 def player_detail(request, player_id):
     player = Player.objects.get(id=player_id)
@@ -131,3 +164,23 @@ def player_detail(request, player_id):
         'player': player
     }
     return render(request, 'player_detail.html', context)
+
+def start_match(request, club1_id, club2_id):
+    club1 = Club.objects.get(id=club1_id)
+    club2 = Club.objects.get(id=club2_id)
+
+    players1 = Player.objects.filter(club=club1)
+    players2 = Player.objects.filter(club=club2)
+
+    winner, loser = simulate_match(players1, players2)
+
+    context = {
+        'club1': club1,
+        'club2': club2,
+        'winner': winner,
+        'loser': loser,
+        'winner_players': winner.players if winner else None,
+        'loser_players': loser.players if loser else None,
+    }
+
+    return render(request, 'match.html', context)

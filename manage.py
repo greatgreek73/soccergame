@@ -2,7 +2,14 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from dotenv import load_dotenv  # Импортируем load_dotenv
 
+# Указываем путь к файлу .env, который находится в той же директории, что и manage.py
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+
+# Загружаем переменные окружения из файла .env, если он существует
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
 
 def main():
     """Run administrative tasks."""

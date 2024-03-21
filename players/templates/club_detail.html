@@ -11,12 +11,14 @@
     <h2>Player List</h2>
     <ol>
         {% for player in club.player_set.all %}
-            <li><a href="{% url 'player_detail' player.id %}">{{ player.name }}</a></li>
+            <li><a href="{% url 'player_detail' player.id %}">{{ player.name }} ({{ player.position }})</a></li>
         {% endfor %}
     </ol>
 
+    <h2>Generate a New Player</h2>
     <form action="{% url 'generate_player_for_club' club.id %}" method="post">
         {% csrf_token %}
+        {{ form.as_p }}
         <button type="submit">Register Player</button>
     </form>
 

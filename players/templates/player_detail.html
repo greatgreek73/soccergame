@@ -8,6 +8,16 @@
     <p>Age: {{ player.age }}</p>
     <p>Club: {{ player.club.name }}</p>
     <p>Nationality: {{ player.nationality }}</p>
-    <!-- Add other player attributes here -->
+    <p>Position: {{ player.position }}</p>
+
+    {% if player.position == 'Goalkeeper' %}
+        <p>Reflexes: {{ player.reflexes }}</p>
+        <p>Line Play: {{ player.line_play }}</p>
+        <p>Endurance: {{ player.endurance }}</p>
+    {% else %}
+        <p>Shooting: {{ player.shooting }}</p>
+        <p>Passing: {{ player.passing }}</p>
+        <p>Speed: {{ player.speed }}</p>
+    {% endif %}
 </body>
 </html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Match Result</title>
+</head>
+<body>
+    <h1>Match Result</h1>
+    <p>{{ club1.name }} vs {{ club2.name }}</p>
+
+    {% if winner %}
+        <h2>Winner: {{ winner.name }}</h2>
+    {% else %}
+        <h2>It's a draw!</h2>
+    {% endif %}
+
+    {% if loser %}
+        <h2>Loser: {{ loser.name }}</h2>
+    {% endif %}
+
+    <h3>Player Statistics</h3>
+
+    <h4>{{ club1.name }}</h4>
+    <ul>
+        {% for player in club1.players %}
+            <li>{{ player.name }} ({{ player.position }})</li>
+            <ul>
+                {% if player.position == 'Goalkeeper' %}
+                    <li>Reflexes: {{ player.reflexes }}</li>
+                    <li>Line Play: {{ player.line_play }}</li>
+                    <li>Endurance: {{ player.endurance }}</li>
+                {% else %}
+                    <li>Shooting: {{ player.shooting }}</li>
+                    <li>Passing: {{ player.passing }}</li>
+                    <li>Speed: {{ player.speed }}</li>
+                {% endif %}
+            </ul>
+        {% endfor %}
+    </ul>
+
+    <h4>{{ club2.name }}</h4>
+    <ul>
+        {% for player in club2.players %}
+            <li>{{ player.name }} ({{ player.position }})</li>
+            <ul>
+                {% if player.position == 'Goalkeeper' %}
+                    <li>Reflexes: {{ player.reflexes }}</li>
+                    <li>Line Play: {{ player.line_play }}</li>
+                    <li>Endurance: {{ player.endurance }}</li>
+                {% else %}
+                    <li>Shooting: {{ player.shooting }}</li>
+                    <li>Passing: {{ player.passing }}</li>
+                    <li>Speed: {{ player.speed }}</li>
+                {% endif %}
+            </ul>
+        {% endfor %}
+    </ul>
+</body>
+</html>
