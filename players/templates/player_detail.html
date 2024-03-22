@@ -12,12 +12,28 @@
 
     {% if player.position == 'Goalkeeper' %}
         <p>Reflexes: {{ player.reflexes }}</p>
-        <p>Line Play: {{ player.line_play }}</p>
-        <p>Endurance: {{ player.endurance }}</p>
+        <p>Handling: {{ player.handling }}</p>
+        <p>Aerial: {{ player.aerial }}</p>
+        <p>Jumping: {{ player.jumping }}</p>
+        <p>Command: {{ player.command }}</p>
+        <p>Throwing: {{ player.throwing }}</p>
+        <p>Kicking: {{ player.kicking }}</p>
     {% else %}
-        <p>Shooting: {{ player.shooting }}</p>
         <p>Passing: {{ player.passing }}</p>
-        <p>Speed: {{ player.speed }}</p>
+        <p>Strength: {{ player.strength }}</p>
+        <p>Stamina: {{ player.stamina }}</p>
+        <p>Pace: {{ player.pace }}</p>
+        <p>Marking: {{ player.marking }}</p>
+        <p>Tackling: {{ player.tackling }}</p>
+        <p>Work Rate: {{ player.work_rate }}</p>
+        <p>Positioning: {{ player.positioning }}</p>
+        <p>Crossing: {{ player.crossing }}</p>
+        <p>Dribbling: {{ player.dribbling }}</p>
+        <p>Ball Control: {{ player.ball_control }}</p>
+        <p>Heading: {{ player.heading }}</p>
+        <p>Finishing: {{ player.finishing }}</p>
+        <p>Long Range: {{ player.long_range }}</p>
+        <p>Vision: {{ player.vision }}</p>
     {% endif %}
 </body>
 </html>

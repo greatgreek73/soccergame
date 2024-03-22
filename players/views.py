@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 import random
 from .match_engine.engine import simulate_match
 
-# fake = Faker()
+fake = Faker()
 
 def index(request):
     return render(request, 'index.html')
@@ -137,7 +137,14 @@ def generate_player_for_club(request, club_id):
                     age=17,
                     club=club,
                     nationality=club.country,
-                    position=position
+                    position=position,
+                    handling=random.randint(1, 20),
+                    reflexes=random.randint(1, 20),
+                    aerial=random.randint(1, 20),
+                    jumping=random.randint(1, 20),
+                    command=random.randint(1, 20),
+                    throwing=random.randint(1, 20),
+                    kicking=random.randint(1, 20)
                 )
             else:
                 player = Player.objects.create(
@@ -146,9 +153,21 @@ def generate_player_for_club(request, club_id):
                     club=club,
                     nationality=club.country,
                     position=position,
-                    shooting=random.randint(1, 20),
+                    strength=random.randint(1, 20),
+                    stamina=random.randint(1, 20),
+                    pace=random.randint(1, 20),
+                    marking=random.randint(1, 20),
+                    tackling=random.randint(1, 20),
+                    work_rate=random.randint(1, 20),
+                    positioning=random.randint(1, 20),
                     passing=random.randint(1, 20),
-                    speed=random.randint(1, 20)
+                    crossing=random.randint(1, 20),
+                    dribbling=random.randint(1, 20),
+                    ball_control=random.randint(1, 20),
+                    heading=random.randint(1, 20),
+                    finishing=random.randint(1, 20),
+                    long_range=random.randint(1, 20),
+                    vision=random.randint(1, 20)
                 )
 
             return redirect('club_detail', club_id=club.id)
@@ -183,8 +202,8 @@ def start_match(request, club_id):
         context = {
             'club1': club1,
             'club2': club2,
-            'winner_club': winner,
-            'loser_club': loser,
+            'winner': winner,
+            'loser': loser,
             'winner_players': winner.players if winner else None,
             'loser_players': loser.players if loser else None,
         }
