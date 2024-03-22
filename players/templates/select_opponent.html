@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Opponent</title>
+</head>
+<body>
+    <h1>Select Opponent Club</h1>
+    <form method="get" action="{% url 'start_match' club.id %}">
+        <select name="opponent_club_id">
+            {% for opponent_club in other_clubs %}
+            <option value="{{ opponent_club.id }}">{{ opponent_club.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Start Match</button>
+    </form>
+</body>
+</html>

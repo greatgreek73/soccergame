@@ -14,5 +14,6 @@ urlpatterns = [
     path('player/<int:player_id>/', views.player_detail, name='player_detail'),
     path('', index, name='index'),
     path('match/<int:club1_id>/<int:club2_id>/', views.start_match, name='start_match'),
+    path('match/<int:club_id>/', views.start_match, name='start_match'),
 
 ]

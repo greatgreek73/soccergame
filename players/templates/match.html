@@ -8,13 +8,13 @@
     <p>{{ club1.name }} vs {{ club2.name }}</p>
 
     {% if winner %}
-        <h2>Winner: {{ winner.name }}</h2>
+        <h2>Winner: {{ winner_club.name }}</h2>
     {% else %}
         <h2>It's a draw!</h2>
     {% endif %}
 
     {% if loser %}
-        <h2>Loser: {{ loser.name }}</h2>
+        <h2>Loser: {{ loser_club.name }}</h2>
     {% endif %}
 
     <h3>Player Statistics</h3>

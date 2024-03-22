@@ -13,7 +13,10 @@ def simulate_match(team1_players, team2_players):
     team1_stats = team1.calculate_stats()
     team2_stats = team2.calculate_stats()
 
-    if team1_stats > team2_stats:
+    stats_difference = abs(team1_stats - team2_stats)
+    random_factor = random.randint(0, stats_difference // 2)  # Случайный фактор в диапазоне от 0 до половины разницы характеристик
+
+    if team1_stats + random_factor >= team2_stats:
         winner = team1
         loser = team2
     else:

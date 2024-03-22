@@ -165,22 +165,36 @@ def player_detail(request, player_id):
     }
     return render(request, 'player_detail.html', context)
 
-def start_match(request, club1_id, club2_id):
-    club1 = Club.objects.get(id=club1_id)
-    club2 = Club.objects.get(id=club2_id)
+def start_match(request, club_id):
+    club1 = Club.objects.get(id=club_id)
+    opponent_club_id = request.GET.get('opponent_club_id')
+    if opponent_club_id:
+        try:
+            club2 = Club.objects.get(id=opponent_club_id)
+        except Club.DoesNotExist:
+            # Обработка случая, когда клуб-соперник не найден
+            return render(request, 'error.html', {'error': 'Invalid opponent club'})
 
-    players1 = Player.objects.filter(club=club1)
-    players2 = Player.objects.filter(club=club2)
+        players1 = Player.objects.filter(club=club1)
+        players2 = Player.objects.filter(club=club2)
 
-    winner, loser = simulate_match(players1, players2)
+        winner, loser = simulate_match(players1, players2)
 
-    context = {
-        'club1': club1,
-        'club2': club2,
-        'winner': winner,
-        'loser': loser,
-        'winner_players': winner.players if winner else None,
-        'loser_players': loser.players if loser else None,
-    }
+        context = {
+            'club1': club1,
+            'club2': club2,
+            'winner_club': winner,
+            'loser_club': loser,
+            'winner_players': winner.players if winner else None,
+            'loser_players': loser.players if loser else None,
+        }
 
-    return render(request, 'match.html', context)
+        return render(request, 'match.html', context)
+    else:
+        # Если club2_id не передан, отображаем форму выбора соперника
+        other_clubs = Club.objects.exclude(id=club_id)
+        context = {
+            'club': club1,
+            'other_clubs': other_clubs,
+        }
+        return render(request, 'select_opponent.html', context)

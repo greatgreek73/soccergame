@@ -22,6 +22,9 @@
         <button type="submit">Register Player</button>
     </form>
 
+    <h2>Start a Match</h2>
+    <a href="{% url 'start_match' club.id %}">Start Match</a>
+
     <p><a href="{% url 'logout' %}">Logout</a></p>
 </body>
 </html>
