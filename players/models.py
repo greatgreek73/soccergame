@@ -50,6 +50,10 @@ class Player(models.Model):
     vision = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
 
     # Характеристики для вратарей
+    strength = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
+    stamina = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
+    pace = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
+    positioning = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
     handling = models.IntegerField(null=True, blank=True)
     reflexes = models.IntegerField(null=True, blank=True)
     aerial = models.IntegerField(null=True, blank=True)
