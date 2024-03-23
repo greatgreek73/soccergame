@@ -220,8 +220,8 @@ def start_match(request, club_id):
         context = {
             'club1': club1,
             'club2': club2,
-            'winner_club': winner.club,
-            'loser_club': loser.club,
+            'winner_club': winner.name,
+            'loser_club': loser.name,
             'winner_players': winner_players,
             'loser_players': loser_players,
         }
