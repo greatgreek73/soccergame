@@ -26,7 +26,8 @@ class Player(models.Model):
         ('Center Forward', 'Center Forward'),
     ]
 
-    name = models.CharField(max_length=100, default=fake.name())
+    first_name = models.CharField(max_length=100, default='')
+    last_name = models.CharField(max_length=100, default='')
     age = models.IntegerField(default=17)
     club = models.ForeignKey(Club, on_delete=models.CASCADE, null=True, blank=True)
     nationality = models.CharField(max_length=50, default="Unknown")
@@ -62,5 +63,8 @@ class Player(models.Model):
     throwing = models.IntegerField(null=True, blank=True)
     kicking = models.IntegerField(null=True, blank=True)
 
+class Meta:
+    unique_together = ('first_name', 'last_name')
+
     def __str__(self):
-        return self.name
+        return f"{self.first_name} {self.last_name}"

@@ -20,7 +20,8 @@ def generate_player(request):
         if form.is_valid():
             position = form.cleaned_data['position']
             Player.objects.create(
-                name=f"{fake.last_name_male()} {fake.first_name_male()}",
+                first_name=fake.first_name_male(),
+                last_name=fake.last_name_male(),
                 age=17,
                 position=position
             )
@@ -131,9 +132,18 @@ def generate_player_for_club(request, club_id):
 
             fake = Faker(locale)
 
+            while True:
+                first_name = fake.first_name_male()
+                last_name = fake.last_name_male()
+
+                # Проверка уникальности сочетания имени и фамилии
+                if not Player.objects.filter(first_name=first_name, last_name=last_name).exists():
+                    break
+
             if position == 'Goalkeeper':
                 player = Player.objects.create(
-                    name=f"{fake.last_name_male()} {fake.first_name_male()}",
+                    first_name=first_name,
+                    last_name=last_name,
                     age=17,
                     club=club,
                     nationality=club.country,
@@ -152,7 +162,8 @@ def generate_player_for_club(request, club_id):
                 )
             else:
                 player = Player.objects.create(
-                    name=f"{fake.last_name_male()} {fake.first_name_male()}",
+                    first_name=first_name,
+                    last_name=last_name,
                     age=17,
                     club=club,
                     nationality=club.country,
@@ -198,18 +209,21 @@ def start_match(request, club_id):
             # Обработка случая, когда клуб-соперник не найден
             return render(request, 'error.html', {'error': 'Invalid opponent club'})
 
-        players1 = Player.objects.filter(club=club1)
-        players2 = Player.objects.filter(club=club2)
+        all_players1 = Player.objects.filter(club=club1)
+        all_players2 = Player.objects.filter(club=club2)
 
-        winner, loser = simulate_match(players1, players2)
+        winner, loser = simulate_match(all_players1, all_players2)
+
+        winner_players = winner.players
+        loser_players = loser.players
 
         context = {
             'club1': club1,
             'club2': club2,
-            'winner': winner,
-            'loser': loser,
-            'winner_players': winner.players if winner else None,
-            'loser_players': loser.players if loser else None,
+            'winner_club': winner.club,
+            'loser_club': loser.club,
+            'winner_players': winner_players,
+            'loser_players': loser_players,
         }
 
         return render(request, 'match.html', context)
