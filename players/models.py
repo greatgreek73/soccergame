@@ -1,9 +1,6 @@
 from django.db import models
-from faker import Faker
 from django.contrib.auth.models import User
 import random
-
-fake = Faker()
 
 class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -33,28 +30,24 @@ class Player(models.Model):
     nationality = models.CharField(max_length=50, default="Unknown")
     position = models.CharField(max_length=50, choices=POSITIONS, default='Unknown')
 
-    # Характеристики для полевых игроков
-    strength = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    stamina = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    pace = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    marking = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    tackling = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    work_rate = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    positioning = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    passing = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    crossing = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    dribbling = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    ball_control = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    heading = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    finishing = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    long_range = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    vision = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
+    # Характеристики для всех игроков
+    strength = models.IntegerField(null=True, blank=True)
+    stamina = models.IntegerField(null=True, blank=True)
+    pace = models.IntegerField(null=True, blank=True)
+    marking = models.IntegerField(null=True, blank=True)
+    tackling = models.IntegerField(null=True, blank=True)
+    work_rate = models.IntegerField(null=True, blank=True)
+    positioning = models.IntegerField(null=True, blank=True)
+    passing = models.IntegerField(null=True, blank=True)
+    crossing = models.IntegerField(null=True, blank=True)
+    dribbling = models.IntegerField(null=True, blank=True)
+    ball_control = models.IntegerField(null=True, blank=True)
+    heading = models.IntegerField(null=True, blank=True)
+    finishing = models.IntegerField(null=True, blank=True)
+    long_range = models.IntegerField(null=True, blank=True)
+    vision = models.IntegerField(null=True, blank=True)
 
     # Характеристики для вратарей
-    strength = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    stamina = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    pace = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
-    positioning = models.IntegerField(default=random.randint(1, 20), null=True, blank=True)
     handling = models.IntegerField(null=True, blank=True)
     reflexes = models.IntegerField(null=True, blank=True)
     aerial = models.IntegerField(null=True, blank=True)
@@ -63,8 +56,28 @@ class Player(models.Model):
     throwing = models.IntegerField(null=True, blank=True)
     kicking = models.IntegerField(null=True, blank=True)
 
-class Meta:
-    unique_together = ('first_name', 'last_name')
+    class Meta:
+        unique_together = ('first_name', 'last_name')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # Проверяем, что объект создаётся, а не обновляется
+            self.strength = random.randint(1, 20)
+            self.stamina = random.randint(1, 20)
+            self.pace = random.randint(1, 20)
+            self.marking = random.randint(1, 20)
+            self.tackling = random.randint(1, 20)
+            self.work_rate = random.randint(1, 20)
+            self.positioning = random.randint(1, 20)
+            self.passing = random.randint(1, 20)
+            self.crossing = random.randint(1, 20)
+            self.dribbling = random.randint(1, 20)
+            self.ball_control = random.randint(1, 20)
+            self.heading = random.randint(1, 20)
+            self.finishing = random.randint(1, 20)
+            self.long_range = random.randint(1, 20)
+            self.vision = random.randint(1, 20)
+            # Добавьте здесь другие характеристики, если необходимо
+        super().save(*args, **kwargs)  # Вызываем стандартную логику сохранения

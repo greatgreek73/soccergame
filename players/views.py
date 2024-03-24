@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Player, Club
 from faker import Faker
 from django.contrib import messages
@@ -49,7 +49,6 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Check if the user has a club
             try:
                 club = Club.objects.get(user=user)
                 return redirect('club_detail', club_id=club.id)
@@ -68,7 +67,7 @@ def home(request):
         return redirect('create_club')
 
 def club_detail(request, club_id):
-    club = Club.objects.get(id=club_id)
+    club = get_object_or_404(Club, id=club_id)
     context = {
         'club': club,
         'form': GeneratePlayerForm()
@@ -79,10 +78,8 @@ def create_club(request):
     if request.method == 'POST':
         form = CreateClubForm(request.POST)
         if form.is_valid():
-            # Check if the user already has a club
             existing_club = Club.objects.filter(user=request.user).first()
             if existing_club:
-                # If the club already exists, redirect to the club page
                 return redirect('club_detail', club_id=existing_club.id)
             
             new_club = Club.objects.create(
@@ -109,7 +106,6 @@ def generate_player_for_club(request, club_id):
         if form.is_valid():
             position = form.cleaned_data['position']
 
-            # Dictionary for mapping countries to Faker locales
             country_to_locale = {
                 'USA': 'en_US',
                 'Russia': 'ru_RU',
@@ -122,12 +118,10 @@ def generate_player_for_club(request, club_id):
                 'Argentina': 'es_AR',
                 'Italy': 'it_IT',
                 'Germany': 'de_DE',
-                # Add more countries as needed
             }
 
             print(f"Club country: {club.country}")
-            # Set Faker locale based on the club's country
-            locale = country_to_locale.get(club.country, 'en_US')  # 'en_US' will be used as default
+            locale = country_to_locale.get(club.country, 'en_US')
             print(f"Using locale: {locale}")
 
             fake = Faker(locale)
@@ -136,7 +130,6 @@ def generate_player_for_club(request, club_id):
                 first_name = fake.first_name_male()
                 last_name = fake.last_name_male()
 
-                # Проверка уникальности сочетания имени и фамилии
                 if not Player.objects.filter(first_name=first_name, last_name=last_name).exists():
                     break
 
@@ -193,26 +186,25 @@ def generate_player_for_club(request, club_id):
     return render(request, 'generate_player.html', context)
 
 def player_detail(request, player_id):
-    player = Player.objects.get(id=player_id)
+    player = get_object_or_404(Player, id=player_id)
     context = {
         'player': player
     }
     return render(request, 'player_detail.html', context)
 
 def start_match(request, club_id):
-    club1 = Club.objects.get(id=club_id)
+    club1 = get_object_or_404(Club, id=club_id)
     opponent_club_id = request.GET.get('opponent_club_id')
     if opponent_club_id:
         try:
-            club2 = Club.objects.get(id=opponent_club_id)
+            club2 = get_object_or_404(Club, id=opponent_club_id)
         except Club.DoesNotExist:
-            # Обработка случая, когда клуб-соперник не найден
             return render(request, 'error.html', {'error': 'Invalid opponent club'})
 
         all_players1 = Player.objects.filter(club=club1)
         all_players2 = Player.objects.filter(club=club2)
 
-        winner, loser = simulate_match(all_players1, all_players2)
+        winner, loser = simulate_match(all_players1, all_players2, club1, club2)
 
         winner_players = winner.players
         loser_players = loser.players
@@ -220,15 +212,14 @@ def start_match(request, club_id):
         context = {
             'club1': club1,
             'club2': club2,
-            'winner_club': winner.name,
-            'loser_club': loser.name,
+            'winner_club': winner.club,
+            'loser_club': loser.club,
             'winner_players': winner_players,
             'loser_players': loser_players,
         }
 
         return render(request, 'match.html', context)
     else:
-        # Если club2_id не передан, отображаем форму выбора соперника
         other_clubs = Club.objects.exclude(id=club_id)
         context = {
             'club': club1,

@@ -1,6 +1,7 @@
 class Team:
-    def __init__(self, players):
+    def __init__(self, players, club):
         self.players = players
+        self.club = club
 
     def calculate_stats(self):
         total_stats = 0
