@@ -16,3 +16,7 @@ class CreateClubForm(forms.Form):
 
 class GeneratePlayerForm(forms.Form):
     position = forms.ChoiceField(label='Position', choices=Player.POSITIONS)
+    player_class = forms.ChoiceField(
+        choices=[(1, 'Class 1'), (2, 'Class 2'), (3, 'Class 3'), (4, 'Class 4')],
+        label='Player Class'
+    )

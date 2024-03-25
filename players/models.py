@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-import random
+import scipy.stats as stats
 
 class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -29,6 +29,7 @@ class Player(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE, null=True, blank=True)
     nationality = models.CharField(max_length=50, default="Unknown")
     position = models.CharField(max_length=50, choices=POSITIONS, default='Unknown')
+    player_class = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # Характеристики для всех игроков
     strength = models.IntegerField(null=True, blank=True)
@@ -64,20 +65,33 @@ class Player(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:  # Проверяем, что объект создаётся, а не обновляется
-            self.strength = random.randint(1, 20)
-            self.stamina = random.randint(1, 20)
-            self.pace = random.randint(1, 20)
-            self.marking = random.randint(1, 20)
-            self.tackling = random.randint(1, 20)
-            self.work_rate = random.randint(1, 20)
-            self.positioning = random.randint(1, 20)
-            self.passing = random.randint(1, 20)
-            self.crossing = random.randint(1, 20)
-            self.dribbling = random.randint(1, 20)
-            self.ball_control = random.randint(1, 20)
-            self.heading = random.randint(1, 20)
-            self.finishing = random.randint(1, 20)
-            self.long_range = random.randint(1, 20)
-            self.vision = random.randint(1, 20)
+            self.strength = self.generate_stat()
+            self.stamina = self.generate_stat()
+            self.pace = self.generate_stat()
+            self.marking = self.generate_stat()
+            self.tackling = self.generate_stat()
+            self.work_rate = self.generate_stat()
+            self.positioning = self.generate_stat()
+            self.passing = self.generate_stat()
+            self.crossing = self.generate_stat()
+            self.dribbling = self.generate_stat()
+            self.ball_control = self.generate_stat()
+            self.heading = self.generate_stat()
+            self.finishing = self.generate_stat()
+            self.long_range = self.generate_stat()
+            self.vision = self.generate_stat()
             # Добавьте здесь другие характеристики, если необходимо
+
         super().save(*args, **kwargs)  # Вызываем стандартную логику сохранения
+
+    def generate_stat(self):
+        if self.player_class == 1:
+            mean_value = 60
+        elif self.player_class == 2:
+            mean_value = 50
+        elif self.player_class == 3:
+            mean_value = 40
+        else:
+            mean_value = 35
+
+        return stats.randint(mean_value - 10, mean_value + 11).rvs()

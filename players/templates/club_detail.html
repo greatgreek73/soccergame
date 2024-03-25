@@ -11,7 +11,7 @@
     <h2>Player List</h2>
     <ol>
         {% for player in club.player_set.all %}
-            <li><a href="{% url 'player_detail' player.id %}">{{ player.first_name }} {{ player.last_name }} ({{ player.position }})</a></li>
+        <li><a href="{% url 'player_detail' player.id %}">{{ player.first_name }} {{ player.last_name }} ({{ player.position }})</a></li>
         {% endfor %}
     </ol>
 

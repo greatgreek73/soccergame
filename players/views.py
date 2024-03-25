@@ -1,3 +1,4 @@
+import scipy.stats as stats
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Player, Club
@@ -6,10 +7,36 @@ from django.contrib import messages
 from .forms import UserRegisterForm, CreateClubForm, GeneratePlayerForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-import random
 from .match_engine.engine import simulate_match
 
 fake = Faker()
+
+STATS = [
+    'strength', 'stamina', 'pace', 'marking', 'tackling', 'work_rate',
+    'positioning', 'passing', 'crossing', 'dribbling', 'ball_control',
+    'heading', 'finishing', 'long_range', 'vision', 'handling', 'reflexes',
+    'aerial', 'jumping', 'command', 'throwing', 'kicking'
+]
+
+def get_main_stats(position):
+    if position == 'Goalkeeper':
+        return ['reflexes', 'aerial', 'kicking']
+    elif position == 'Right Back':
+        return ['pace', 'stamina', 'tackling']
+    elif position == 'Left Back':
+        return ['pace', 'stamina', 'tackling']
+    elif position == 'Center Back':
+        return ['strength', 'marking', 'heading']
+    elif position == 'Right Midfielder':
+        return ['pace', 'dribbling', 'passing']
+    elif position == 'Central Midfielder':
+        return ['stamina', 'positioning', 'tackling']
+    elif position == 'Left Midfielder':
+        return ['pace', 'dribbling', 'passing']
+    elif position == 'Attacking Midfielder':
+        return ['dribbling', 'vision', 'long_range']
+    elif position == 'Center Forward':
+        return ['strength', 'finishing', 'heading']
 
 def index(request):
     return render(request, 'index.html')
@@ -105,6 +132,38 @@ def generate_player_for_club(request, club_id):
         form = GeneratePlayerForm(request.POST)
         if form.is_valid():
             position = form.cleaned_data['position']
+            player_class = int(form.cleaned_data['player_class'])  # Преобразуем строку в целое число
+
+            # Определяем среднее значение для выбранного класса
+            class_means = {1: 60, 2: 50, 3: 40, 4: 35}
+            mean_value = class_means[player_class]
+
+            # Распределение 600 очков между 15 характеристиками
+            total_points = 600
+            main_stats = get_main_stats(position)
+            secondary_stats = [stat for stat in STATS if stat not in main_stats]
+
+            # Выделяем больше очков для основных характеристик
+            points_for_main_stats = total_points * 0.5
+            points_per_main_stat = points_for_main_stats / len(main_stats)
+
+            # Оставшиеся очки распределяются равномерно между второстепенными характеристиками
+            points_for_secondary_stats = total_points * 0.5
+            points_per_secondary_stat = points_for_secondary_stats / len(secondary_stats)
+
+            # Создаем словарь для присваивания характеристик игроку
+            player_stats = {}
+            for stat in STATS:
+                if stat in main_stats:
+                    player_stats[stat] = round(points_per_main_stat + points_per_secondary_stat)
+                else:
+                    player_stats[stat] = round(points_per_secondary_stat)
+
+            # Обработка специальных случаев для вратарей
+            if position == 'Goalkeeper':
+                player_stats['reflexes'] = round(points_per_main_stat + points_per_secondary_stat)
+                player_stats['aerial'] = round(points_per_main_stat + points_per_secondary_stat)
+                player_stats['kicking'] = round(points_per_main_stat + points_per_secondary_stat)
 
             country_to_locale = {
                 'USA': 'en_US',
@@ -133,50 +192,16 @@ def generate_player_for_club(request, club_id):
                 if not Player.objects.filter(first_name=first_name, last_name=last_name).exists():
                     break
 
-            if position == 'Goalkeeper':
-                player = Player.objects.create(
-                    first_name=first_name,
-                    last_name=last_name,
-                    age=17,
-                    club=club,
-                    nationality=club.country,
-                    position=position,
-                    strength=random.randint(1, 20),
-                    stamina=random.randint(1, 20),
-                    pace=random.randint(1, 20),
-                    handling=random.randint(1, 20),
-                    reflexes=random.randint(1, 20),
-                    positioning=random.randint(1, 20),
-                    aerial=random.randint(1, 20),
-                    jumping=random.randint(1, 20),
-                    command=random.randint(1, 20),
-                    throwing=random.randint(1, 20),
-                    kicking=random.randint(1, 20)
-                )
-            else:
-                player = Player.objects.create(
-                    first_name=first_name,
-                    last_name=last_name,
-                    age=17,
-                    club=club,
-                    nationality=club.country,
-                    position=position,
-                    strength=random.randint(1, 20),
-                    stamina=random.randint(1, 20),
-                    pace=random.randint(1, 20),
-                    marking=random.randint(1, 20),
-                    tackling=random.randint(1, 20),
-                    work_rate=random.randint(1, 20),
-                    positioning=random.randint(1, 20),
-                    passing=random.randint(1, 20),
-                    crossing=random.randint(1, 20),
-                    dribbling=random.randint(1, 20),
-                    ball_control=random.randint(1, 20),
-                    heading=random.randint(1, 20),
-                    finishing=random.randint(1, 20),
-                    long_range=random.randint(1, 20),
-                    vision=random.randint(1, 20)
-                )
+            player = Player.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                age=17,
+                club=club,
+                nationality=club.country,
+                position=position,
+                player_class=player_class,
+                **player_stats
+            )
 
             return redirect('club_detail', club_id=club.id)
     else:
