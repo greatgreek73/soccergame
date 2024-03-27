@@ -6,6 +6,8 @@ class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     country = models.CharField(max_length=50)
+    stadium_name = models.CharField(max_length=100, default='Stadium')
+    stadium_capacity = models.IntegerField(default=10000)
 
     def __str__(self):
         return self.name

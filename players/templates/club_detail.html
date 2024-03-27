@@ -7,6 +7,14 @@
     <h1>Welcome to your club, {{ request.user.username }}!</h1>
     <p>Club Name: {{ club.name }}</p>
     <p>Club Country: {{ club.country }}</p>
+    <p>
+        Stadium Name: <span id="stadium-name">{{ club.stadium_name }}</span>
+        <button id="edit-stadium">Edit</button>
+    </p>
+    <p>
+        Stadium Capacity: <span id="stadium-capacity">{{ club.stadium_capacity }}</span>
+        <button id="increase-capacity">+1000</button>
+    </p>
 
     <h2>Player List</h2>
     <ol>
@@ -26,5 +34,43 @@
     <a href="{% url 'start_match' club.id %}">Start Match</a>
 
     <p><a href="{% url 'logout' %}">Logout</a></p>
+
+    <script>
+        const stadiumNameElement = document.getElementById('stadium-name');
+        const editButton = document.getElementById('edit-stadium');
+        const stadiumCapacityElement = document.getElementById('stadium-capacity');
+        const increaseCapacityButton = document.getElementById('increase-capacity');
+
+        editButton.addEventListener('click', () => {
+            stadiumNameElement.contentEditable = true;
+            stadiumNameElement.focus();
+        });
+
+        stadiumNameElement.addEventListener('blur', () => {
+            stadiumNameElement.contentEditable = false;
+            fetch(`/clubs/{{ club.id }}/update_stadium/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({stadium_name: stadiumNameElement.textContent})
+            });
+        });
+
+        increaseCapacityButton.addEventListener('click', () => {
+            fetch(`/clubs/{{ club.id }}/increase_capacity/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                stadiumCapacityElement.textContent = data.stadium_capacity;
+            });
+        });
+    </script>
 </body>
 </html>

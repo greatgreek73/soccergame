@@ -1,5 +1,5 @@
 import scipy.stats as stats
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Player, Club
 from faker import Faker
@@ -8,6 +8,8 @@ from .forms import UserRegisterForm, CreateClubForm, GeneratePlayerForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .match_engine.engine import simulate_match
+
+import json  # Added for JSON handling in update_stadium
 
 fake = Faker()
 
@@ -251,3 +253,17 @@ def start_match(request, club_id):
             'other_clubs': other_clubs,
         }
         return render(request, 'select_opponent.html', context)
+
+def update_stadium(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        club.stadium_name = data['stadium_name']
+        club.save()
+        return JsonResponse({'status': 'ok'})
+def increase_capacity(request, pk):
+    club = get_object_or_404(Club, pk=pk)
+    if request.method == 'POST':
+        club.stadium_capacity += 1000
+        club.save()
+        return JsonResponse({'stadium_capacity': club.stadium_capacity})
