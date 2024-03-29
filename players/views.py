@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .match_engine.engine import simulate_match
 
-import json  # Added for JSON handling in update_stadium
+import json
 
 fake = Faker()
 
@@ -134,38 +134,34 @@ def generate_player_for_club(request, club_id):
         form = GeneratePlayerForm(request.POST)
         if form.is_valid():
             position = form.cleaned_data['position']
-            player_class = int(form.cleaned_data['player_class'])  # Преобразуем строку в целое число
+            player_class = int(form.cleaned_data['player_class'])
 
-            # Определяем среднее значение для выбранного класса
-            class_means = {1: 60, 2: 50, 3: 40, 4: 35}
-            mean_value = class_means[player_class]
+            # Определяем общее количество очков для распределения на основе класса игрока
+            total_points_distribution = {1: 600, 2: 500, 3: 400, 4: 350}
+            total_points = total_points_distribution[player_class]
 
-            # Распределение 600 очков между 15 характеристиками
-            total_points = 600
             main_stats = get_main_stats(position)
             secondary_stats = [stat for stat in STATS if stat not in main_stats]
 
-            # Выделяем больше очков для основных характеристик
-            points_for_main_stats = total_points * 0.5
-            points_per_main_stat = points_for_main_stats / len(main_stats)
+            # Распределение очков между основными и второстепенными характеристиками
+            main_stats_points = int(total_points * 0.6)  # 60% очков для основных характеристик
+            secondary_stats_points = total_points - main_stats_points
 
-            # Оставшиеся очки распределяются равномерно между второстепенными характеристиками
-            points_for_secondary_stats = total_points * 0.5
-            points_per_secondary_stat = points_for_secondary_stats / len(secondary_stats)
+            points_per_main_stat = main_stats_points // len(main_stats)
+            points_per_secondary_stat = secondary_stats_points // len(secondary_stats)
 
-            # Создаем словарь для присваивания характеристик игроку
             player_stats = {}
             for stat in STATS:
                 if stat in main_stats:
-                    player_stats[stat] = round(points_per_main_stat + points_per_secondary_stat)
+                    player_stats[stat] = points_per_main_stat
                 else:
-                    player_stats[stat] = round(points_per_secondary_stat)
+                    player_stats[stat] = points_per_secondary_stat
 
             # Обработка специальных случаев для вратарей
             if position == 'Goalkeeper':
-                player_stats['reflexes'] = round(points_per_main_stat + points_per_secondary_stat)
-                player_stats['positioning'] = round(points_per_main_stat + points_per_secondary_stat)
-                player_stats['handling'] = round(points_per_main_stat + points_per_secondary_stat)
+                player_stats['reflexes'] = round(points_per_main_stat * 1.2)
+                player_stats['positioning'] = round(points_per_main_stat * 1.2)
+                player_stats['handling'] = round(points_per_main_stat * 1.2)
 
             country_to_locale = {
                 'USA': 'en_US',
@@ -261,6 +257,7 @@ def update_stadium(request, pk):
         club.stadium_name = data['stadium_name']
         club.save()
         return JsonResponse({'status': 'ok'})
+
 def increase_capacity(request, pk):
     club = get_object_or_404(Club, pk=pk)
     if request.method == 'POST':
