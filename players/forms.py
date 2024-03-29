@@ -15,7 +15,20 @@ class CreateClubForm(forms.Form):
     country = forms.ChoiceField(label='Country', choices=[('Russia', 'Russia'), ('USA', 'USA'), ('Greece', 'Greece'), ('Italy', 'Italy')])
 
 class GeneratePlayerForm(forms.Form):
-    position = forms.ChoiceField(label='Position', choices=Player.POSITIONS)
+    position = forms.ChoiceField(choices=[
+        ('Goalkeeper', 'Goalkeeper'),
+        ('Right Back', 'Right Back'),
+        ('Left Back', 'Left Back'),
+        ('Center Back', 'Center Back'),
+        ('Right Midfielder', 'Right Midfielder'),
+        ('Central Midfielder', 'Central Midfielder'),
+        ('Left Midfielder', 'Left Midfielder'),
+        ('Attacking Midfielder', 'Attacking Midfielder'),
+        ('Center Forward', 'Center Forward'),
+        ('Defensive Midfielder', 'Defensive Midfielder'),  # Новая позиция
+        ('Right Defensive Midfielder', 'Right Defensive Midfielder'),  # Новая позиция
+        ('Left Defensive Midfielder', 'Left Defensive Midfielder'),  # Новая позиция
+    ])
     player_class = forms.ChoiceField(
         choices=[(1, 'Class 1'), (2, 'Class 2'), (3, 'Class 3'), (4, 'Class 4')],
         label='Player Class'

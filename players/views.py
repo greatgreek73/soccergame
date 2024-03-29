@@ -22,23 +22,23 @@ STATS = [
 
 def get_main_stats(position):
     if position == 'Goalkeeper':
-        return ['reflexes', 'aerial', 'kicking']
-    elif position == 'Right Back':
-        return ['pace', 'stamina', 'tackling']
-    elif position == 'Left Back':
-        return ['pace', 'stamina', 'tackling']
+        return ['reflexes', 'positioning', 'handling']
+    elif position == 'Right Back' or position == 'Left Back':
+        return ['marking', 'tackling', 'crossing']
     elif position == 'Center Back':
-        return ['strength', 'marking', 'heading']
-    elif position == 'Right Midfielder':
-        return ['pace', 'dribbling', 'passing']
+        return ['marking', 'tackling', 'heading']
+    elif position == 'Right Midfielder' or position == 'Left Midfielder':
+        return ['pace', 'crossing', 'ball_control']
     elif position == 'Central Midfielder':
-        return ['stamina', 'positioning', 'tackling']
-    elif position == 'Left Midfielder':
-        return ['pace', 'dribbling', 'passing']
+        return ['passing', 'work_rate', 'vision']
     elif position == 'Attacking Midfielder':
-        return ['dribbling', 'vision', 'long_range']
+        return ['passing', 'long_range', 'ball_control']
     elif position == 'Center Forward':
-        return ['strength', 'finishing', 'heading']
+        return ['heading', 'finishing', 'long_range']
+    elif position == 'Defensive Midfielder':
+        return ['passing', 'tackling', 'marking']
+    elif position == 'Right Defensive Midfielder' or position == 'Left Defensive Midfielder':
+        return ['marking', 'tackling', 'crossing']
 
 def index(request):
     return render(request, 'index.html')
@@ -164,8 +164,8 @@ def generate_player_for_club(request, club_id):
             # Обработка специальных случаев для вратарей
             if position == 'Goalkeeper':
                 player_stats['reflexes'] = round(points_per_main_stat + points_per_secondary_stat)
-                player_stats['aerial'] = round(points_per_main_stat + points_per_secondary_stat)
-                player_stats['kicking'] = round(points_per_main_stat + points_per_secondary_stat)
+                player_stats['positioning'] = round(points_per_main_stat + points_per_secondary_stat)
+                player_stats['handling'] = round(points_per_main_stat + points_per_secondary_stat)
 
             country_to_locale = {
                 'USA': 'en_US',
