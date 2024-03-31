@@ -5,22 +5,17 @@ class PlayerStatsGenerator:
         self.config = config
 
     def generate_stats(self, player_position, player_class):
-        total_points_distribution = {1: 600, 2: 500, 3: 400, 4: 350}
-        total_points = total_points_distribution[player_class]
+        total_points = self.config['total_points'][player_class]
+        main_stats_ratio = self.config['main_stats_ratio'][player_class]
+        secondary_stats_range = self.config['secondary_stats_range'][player_class]
+        max_stat_value = self.config['max_stat_value']
 
         main_stats = self._get_main_stats(player_position)
         secondary_stats = [stat for stat in self.config['stats'] if stat not in main_stats]
 
         # Распределение очков между основными и второстепенными характеристиками
-        if player_class == 1:
-            main_stats_points = int(total_points * 0.8)  # 80% очков для основных характеристик для класса 1
-            secondary_stats_points = total_points - main_stats_points
-        elif player_position == 'Center Forward':
-            main_stats_points = int(total_points * 0.7)  # 70% очков для основных характеристик
-            secondary_stats_points = total_points - main_stats_points
-        else:
-            main_stats_points = int(total_points * 0.6)  # 60% очков для основных характеристик
-            secondary_stats_points = total_points - main_stats_points
+        main_stats_points = int(total_points * main_stats_ratio)
+        secondary_stats_points = total_points - main_stats_points
 
         # Распределение очков для основных характеристик
         points_per_main_stat = main_stats_points // len(main_stats)
@@ -31,12 +26,11 @@ class PlayerStatsGenerator:
         points_per_secondary_stat = []
         for stat in secondary_stats:
             if stat in self._get_unnecessary_stats(player_position):
-                points = stats.randint(1, 31).rvs()  # Генерация от 1 до 30 с уменьшением вероятности больших значений
+                lower_bound, upper_bound = secondary_stats_range
+                points = stats.randint(lower_bound, upper_bound + 1).rvs()  # Генерация в указанном диапазоне
             else:
-                if player_class == 1:
-                    points = stats.randint(30, 61).rvs()  # Генерация от 30 до 60 для класса 1
-                else:
-                    points = stats.randint(1, 101).rvs()  # Генерация от 1 до 100
+                lower_bound, upper_bound = secondary_stats_range
+                points = stats.randint(lower_bound, upper_bound + 1).rvs()  # Генерация в указанном диапазоне
             points_per_secondary_stat.append(points)
 
         player_stats = {}
@@ -50,19 +44,15 @@ class PlayerStatsGenerator:
                     player_stats[stat] = 0  # или любое другое значение по умолчанию
 
         # Выделение ключевых характеристик для некоторых позиций
-        if player_position == 'Goalkeeper':
-            player_stats['reflexes'] = round(player_stats['reflexes'] * 1.2)
-            player_stats['positioning'] = round(player_stats['positioning'] * 1.2)
-            player_stats['handling'] = round(player_stats['handling'] * 1.2)
-        elif player_position == 'Defensive Midfielder':
-            player_stats['long_range'] = round(player_stats['long_range'] * 1.5)
+        key_stat_multipliers = self.config.get('key_stat_multipliers', {})
+        for position, multipliers in key_stat_multipliers.items():
+            if player_position == position:
+                for stat, multiplier in multipliers.items():
+                    player_stats[stat] = round(player_stats[stat] * multiplier)
 
         # Ограничение диапазона значений
         for stat, value in player_stats.items():
-            if player_class == 1:
-                player_stats[stat] = max(30, min(100, value))
-            else:
-                player_stats[stat] = max(10, min(80, value))
+            player_stats[stat] = min(value, max_stat_value)
 
         return player_stats
 
@@ -87,6 +77,14 @@ class PlayerStatsGenerator:
             return ['marking', 'tackling', 'crossing']
 
     def _get_unnecessary_stats(self, position):
+        unnecessary_stats = []
         if position == 'Center Forward':
-            return ['marking', 'tackling', 'crossing']
-        return []
+            unnecessary_stats.extend(['tackling', 'marking', 'crossing'])
+        elif position == 'Center Back':
+            unnecessary_stats.append('crossing')
+        elif position == 'Central Midfielder':
+            unnecessary_stats.append('crossing')
+        elif position == 'Defensive Midfielder':
+            unnecessary_stats.append('crossing')
+        return unnecessary_stats
+

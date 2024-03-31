@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .match_engine.engine import simulate_match
 from utils.player_stats_generator import PlayerStatsGenerator
+from utils.config import TOTAL_POINTS, MAIN_STATS_RATIO, SECONDARY_STATS_RANGE, KEY_STAT_MULTIPLIERS, MAX_STAT_VALUE
 
 import json
 
@@ -118,7 +119,12 @@ def generate_player_for_club(request, club_id):
             player_class = int(form.cleaned_data['player_class'])
 
             config = {
-                'stats': STATS
+                'stats': STATS,
+                'total_points': TOTAL_POINTS,
+                'main_stats_ratio': MAIN_STATS_RATIO,
+                'secondary_stats_range': SECONDARY_STATS_RANGE,
+                'key_stat_multipliers': KEY_STAT_MULTIPLIERS,
+                'max_stat_value': MAX_STAT_VALUE
             }
             generator = PlayerStatsGenerator(config)
             player_stats = generator.generate_stats(position, player_class)
