@@ -7,7 +7,6 @@ class PlayerStatsGenerator:
     def generate_stats(self, player_position, player_class):
         total_points = self.config['total_points'][player_class]
         main_stats_ratio = self.config['main_stats_ratio'][player_class]
-        secondary_stats_range = self.config['secondary_stats_range'][player_class]
         max_stat_value = self.config['max_stat_value']
 
         main_stats = self._get_main_stats(player_position)
@@ -18,25 +17,30 @@ class PlayerStatsGenerator:
         secondary_stats_points = total_points - main_stats_points
 
         # Распределение очков для основных характеристик
-        points_per_main_stat = main_stats_points // len(main_stats)
-        if player_class == 1:
-            points_per_main_stat = stats.randint(points_per_main_stat - 5, points_per_main_stat + 10).rvs()  # Небольшой разброс для класса 1
+        main_stat_points = []
+        for i in range(len(main_stats)):
+            lower_bound = main_stats_points // len(main_stats) - 10
+            upper_bound = main_stats_points // len(main_stats) + 10
+            points = stats.randint(max(lower_bound, 5), upper_bound).rvs()
+            main_stat_points.append(points)
 
         # Распределение очков для второстепенных характеристик
         points_per_secondary_stat = []
+        unnecessary_stats = self._get_unnecessary_stats(player_position)
         for stat in secondary_stats:
-            if stat in self._get_unnecessary_stats(player_position):
-                lower_bound, upper_bound = secondary_stats_range
-                points = stats.randint(lower_bound, upper_bound + 1).rvs()  # Генерация в указанном диапазоне
+            if stat in unnecessary_stats:
+                lower_bound, upper_bound = (1, 30)  # Диапазон для ненужных характеристик
+                points = stats.randint(lower_bound, upper_bound + 1).rvs()
             else:
-                lower_bound, upper_bound = secondary_stats_range
-                points = stats.randint(lower_bound, upper_bound + 1).rvs()  # Генерация в указанном диапазоне
+                lower_bound, upper_bound = (5, 50)  # Диапазон для остальных второстепенных характеристик
+                points = stats.randint(lower_bound, upper_bound + 1).rvs()
             points_per_secondary_stat.append(points)
 
         player_stats = {}
         for i, stat in enumerate(self.config['stats']):
             if stat in main_stats:
-                player_stats[stat] = points_per_main_stat
+                index = main_stats.index(stat)
+                player_stats[stat] = main_stat_points[index]
             else:
                 if i < len(points_per_secondary_stat):
                     player_stats[stat] = points_per_secondary_stat[i]
@@ -77,14 +81,6 @@ class PlayerStatsGenerator:
             return ['marking', 'tackling', 'crossing']
 
     def _get_unnecessary_stats(self, position):
-        unnecessary_stats = []
         if position == 'Center Forward':
-            unnecessary_stats.extend(['tackling', 'marking', 'crossing'])
-        elif position == 'Center Back':
-            unnecessary_stats.append('crossing')
-        elif position == 'Central Midfielder':
-            unnecessary_stats.append('crossing')
-        elif position == 'Defensive Midfielder':
-            unnecessary_stats.append('crossing')
-        return unnecessary_stats
-
+            return ['marking', 'tackling', 'crossing']
+        return []
