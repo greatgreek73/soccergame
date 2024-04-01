@@ -1,6 +1,10 @@
 from pathlib import Path
 import os
 import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -57,22 +61,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'newsoccergame.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fmdb_986k',
-        'USER': 'fmdb_986k_user',
-        'PASSWORD': '40uZnV7oZRNohZ6ONtELmHXh8uUKgPqz',
-        'HOST': 'dpg-co52u7a1hbls73c6j7og-a',
-        'PORT': '5432',
-    }
-}
-
-
-
 #DATABASES = {
-#   'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.postgresql',
+   #     'NAME': 'fmdb_986k',
+   #     'USER': 'fmdb_986k_user',
+   #     'PASSWORD': '40uZnV7oZRNohZ6ONtELmHXh8uUKgPqz',
+   #     'HOST': 'dpg-co52u7a1hbls73c6j7og-a',
+   #     'PORT': '5432',
+   # }
 #}
+
+
+
+# Database
+DATABASES = {
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+}
 
 
 
