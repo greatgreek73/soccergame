@@ -63,7 +63,7 @@ DATABASES = {
         'NAME': 'fmdb_986k',
         'USER': 'fmdb_986k_user',
         'PASSWORD': '40uZnV7oZRNohZ6ONtELmHXh8uUKgPqz',
-        'HOST': 'dpg-c052u7a1hb1s73c6j70g-a',
+        'HOST': 'dpg-co52u7a1hbls73c6j7og-a',
         'PORT': '5432',
     }
 }
