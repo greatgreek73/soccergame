@@ -1,17 +1,17 @@
 import scipy.stats as stats
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Player, Club
+from .models import Player, Club, Lineup, LineupPlayer
 from faker import Faker
 from django.contrib import messages
 from .forms import UserRegisterForm, CreateClubForm, GeneratePlayerForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .match_engine.engine import simulate_match
+from match_engine.engine import simulate_match
 from utils.player_stats_generator import PlayerStatsGenerator
 from utils.config import TOTAL_POINTS, MAIN_STATS_RATIO, KEY_STAT_MULTIPLIERS, MAX_STAT_VALUE
-
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 fake = Faker()
 
@@ -229,3 +229,27 @@ def increase_capacity(request, pk):
         club.stadium_capacity += 1000
         club.save()
         return JsonResponse({'stadium_capacity': club.stadium_capacity})
+    
+@login_required
+def lineup_selection(request):
+    players = Player.objects.filter(club__user=request.user)
+    return render(request, 'lineup_selection.html', {'players': players})
+
+@login_required
+@csrf_exempt
+def save_lineup(request):
+    if request.method == 'POST':
+        lineup_data = json.loads(request.body)
+        
+        # Создаем новый состав и связываем его с текущим пользователем
+        lineup = Lineup.objects.create(user=request.user)
+        
+        # Сохраняем игроков и их позиции в составе
+        for player_data in lineup_data:
+            player_id = player_data['player_id']
+            position = player_data['position']
+            LineupPlayer.objects.create(lineup=lineup, player_id=player_id, position=position)
+        
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False}, status=400)

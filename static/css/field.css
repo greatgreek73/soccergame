@@ -1,0 +1,75 @@
+.field-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 60%;
+}
+
+.field-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.player-position {
+    position: absolute;
+    width: 8%;
+    height: 12%;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.goalkeeper {
+    top: 5%;
+    left: 46%;
+}
+
+.defender {
+    top: 30%;
+}
+
+.left-back {
+    left: 20%;
+}
+
+.centre-back {
+    left: 38%;
+}
+
+.right-back {
+    left: 56%;
+}
+
+.midfielder {
+    top: 50%;
+}
+
+.left-midfielder {
+    left: 25%;
+}
+
+.central-midfielder {
+    left: 40%;
+}
+
+.right-midfielder {
+    left: 55%;
+}
+
+.forward {
+    top: 70%;
+}
+
+.left-forward {
+    left: 35%;
+}
+
+.right-forward {
+    left: 50%;
+}

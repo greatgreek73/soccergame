@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lineup Selection</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        #stadium-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #stadium-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        #player-list {
+            float: left;
+            width: 200px;
+        }
+        #field {
+            float: left;
+            width: 500px;
+            height: 500px;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+        .position {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            position: absolute;
+        }
+        .position[data-position="GK"] {
+            top: 400px;
+            left: 200px;
+        }
+        .position[data-position="DEF"] {
+            top: 300px;
+            left: 150px;
+        }
+        .position[data-position="MID"] {
+            top: 200px;
+            left: 150px;
+        }
+        .position[data-position="FWD"] {
+            top: 100px;
+            left: 200px;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('.player').draggable({
+                revert: 'invalid',
+                cursor: 'move',
+                helper: 'clone',
+                zIndex: 100
+            });
+
+            $('.position').droppable({
+                accept: function(draggable) {
+                    var playerPosition = draggable.data('player-position');
+                    var positionType = $(this).data('position');
+                    return playerPosition === positionType;
+                },
+                drop: function(event, ui) {
+                    var player = ui.draggable;
+                    var playerId = player.data('player-id');
+                    var position = $(this).data('position');
+
+                    // Проверяем, есть ли уже игрок на этой позиции
+                    if ($(this).find('.player').length === 0) {
+                        // Если позиция свободна, добавляем игрока на эту позицию
+                        var playerClone = player.clone().removeAttr('style').removeClass('ui-draggable');
+                        $(this).append(playerClone);
+
+                        // Удаляем игрока из списка игроков
+                        player.remove();
+
+                        // Отправляем данные на сервер (можно использовать AJAX)
+                        // Например: $.post('/lineup/add/', { player_id: playerId, position: position });
+                    }
+                }
+            });
+
+            $('#save-lineup').click(function() {
+                var lineup = [];
+                $('.position').each(function() {
+                    var position = $(this).data('position');
+                    var player = $(this).find('.player');
+                    if (player.length > 0) {
+                        var playerId = player.data('player-id');
+                        lineup.push({
+                            player_id: playerId,
+                            position: position
+                        });
+                    }
+                });
+
+                // Отправляем данные на сервер с помощью AJAX-запроса
+                $.ajax({
+                    url: '/lineup/save/',
+                    type: 'POST',
+                    data: JSON.stringify(lineup),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        alert('Lineup saved successfully!');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error saving lineup: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Lineup Selection</h1>
+
+    <div id="stadium-image">
+        <img src="{% static 'images/field1.png' %}" alt="Stadium Image">
+    </div>
+
+    <div id="player-list">
+        <h3>Players</h3>
+        <ul>
+            {% for player in players %}
+                <li class="player" data-player-id="{{ player.id }}" data-player-position="{{ player.position }}">
+                    {{ player.first_name }} {{ player.last_name }} ({{ player.position }})
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="field">
+        <div class="position" data-position="GK"></div>
+        <div class="position" data-position="DEF"></div>
+        <div class="position" data-position="MID"></div>
+        <div class="position" data-position="FWD"></div>
+    </div>
+
+    <button id="save-lineup">Save Lineup</button>
+</body>
+</html>

@@ -63,3 +63,12 @@ class Player(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+class Lineup(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Другие поля, связанные с составом (например, матч)
+
+class LineupPlayer(models.Model):
+    lineup = models.ForeignKey(Lineup, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    position = models.CharField(max_length=10)
