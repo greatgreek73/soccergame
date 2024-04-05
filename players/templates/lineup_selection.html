@@ -8,24 +8,19 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <style>
-        #stadium-image {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        #stadium-image img {
-            max-width: 100%;
-            height: auto;
-        }
         #player-list {
             float: left;
             width: 200px;
         }
-        #field {
+        #stadium-image {
             float: left;
-            width: 500px;
-            height: 500px;
-            background-color: #f0f0f0;
-            position: relative;
+            margin-left: 20px;
+        }
+        #stadium-image img {
+            max-width: 100%;
+            height: auto;
+            width: 400px;
+            height: 300px;
         }
         .position {
             width: 100px;
@@ -34,19 +29,19 @@
             position: absolute;
         }
         .position[data-position="GK"] {
-            top: 400px;
+            top: 200px;
             left: 200px;
         }
         .position[data-position="DEF"] {
-            top: 300px;
+            top: 150px;
             left: 150px;
         }
         .position[data-position="MID"] {
-            top: 200px;
+            top: 100px;
             left: 150px;
         }
         .position[data-position="FWD"] {
-            top: 100px;
+            top: 50px;
             left: 200px;
         }
     </style>
@@ -119,10 +114,6 @@
 <body>
     <h1>Lineup Selection</h1>
 
-    <div id="stadium-image">
-        <img src="{% static 'images/field1.png' %}" alt="Stadium Image">
-    </div>
-
     <div id="player-list">
         <h3>Players</h3>
         <ul>
@@ -134,11 +125,8 @@
         </ul>
     </div>
 
-    <div id="field">
-        <div class="position" data-position="GK"></div>
-        <div class="position" data-position="DEF"></div>
-        <div class="position" data-position="MID"></div>
-        <div class="position" data-position="FWD"></div>
+    <div id="stadium-image">
+        <img src="{% static 'images/field1.png' %}" alt="Stadium Image">
     </div>
 
     <button id="save-lineup">Save Lineup</button>
