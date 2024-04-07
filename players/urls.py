@@ -18,7 +18,6 @@ urlpatterns = [
     path('match/<int:club_id>/', views.start_match, name='start_match'),
     path('clubs/<int:pk>/update_stadium/', views.update_stadium, name='update_stadium'),
     path('clubs/<int:pk>/increase_capacity/', views.increase_capacity, name='increase_capacity'),
-    path('lineup-selection/', lineup_selection, name='lineup_selection'),
-    path('lineup/', views.lineup_selection, name='lineup_selection'),
+    path('lineup-selection/', views.lineup_selection, name='lineup_selection'),
     path('lineup/save/', views.save_lineup, name='save_lineup'),
 ]

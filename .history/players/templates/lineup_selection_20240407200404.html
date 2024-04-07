@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lineup Selection</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        #player-list {
+            float: left;
+            width: 200px;
+        }
+        #stadium-image {
+            float: left;
+            margin-left: 20px;
+            position: relative;
+        }
+        #stadium-image img {
+            max-width: 100%;
+            height: auto;
+            width: 400px;
+            height: 300px;
+        }
+        .position {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            position: absolute;
+        }
+        .position[data-position="GK"] {
+            top: 200px;
+            left: 200px;
+        }
+        .position[data-position="DEF"] {
+            top: 150px;
+            left: 150px;
+        }
+        .position[data-position="MID"] {
+            top: 100px;
+            left: 150px;
+        }
+        .position[data-position="FWD"] {
+            top: 50px;
+            left: 200px;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('.player').draggable({
+                revert: 'invalid',
+                cursor: 'move',
+                helper: 'clone',
+                zIndex: 100
+            });
+
+            $('.position').droppable({
+                accept: function(draggable) {
+                    return true; // Теперь любой игрок может быть перетащен в любой слот
+                },
+                drop: function(event, ui) {
+                    console.log("Игрок помещен в слот");
+                    if ($(this).find('.player').length === 0) {
+                        var player = ui.draggable;
+                        var playerId = player.data('player-id');
+                        var position = $(this).data('position');
+
+                        var playerClone = player.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
+                        playerClone.uniqueId();
+                        $(this).append(playerClone);
+
+                        player.remove();
+                    }
+                }
+            });
+
+            $('#save-lineup').click(function() {
+                var lineup = [];
+                $('.position').each(function() {
+                    var position = $(this).data('position');
+                    var player = $(this).find('.player');
+                    if (player.length > 0) {
+                        var playerId = player.data('player-id');
+                        lineup.push({player_id: playerId, position: position});
+                    }
+                });
+
+                $.ajax({
+                    url: '/lineup/save/',
+                    type: 'POST',
+                    data: JSON.stringify(lineup),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        alert('Lineup saved successfully!');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error saving lineup: ' + error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Lineup Selection</h1>
+
+    <div id="player-list">
+        <h3>Players</h3>
+        <ul>
+            {% for player in players %}
+                <li class="player" data-player-id="{{ player.id }}" data-player-position="{{ player.position }}">
+                    {{ player.first_name }} {{ player.last_name }} ({{ player.position }})
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="stadium-image">
+        <img src="{% static 'images/field1.png' %}" alt="Stadium Image">
+        <!-- Примеры слотов-приемников -->
+        <div class="position" data-position="GK"></div> <!-- Вратарь -->
+        <div class="position" data-position="DEF"></div> <!-- Защитник -->
+        <div class="position" data-position="MID"></div> <!-- Полузащитник -->
+        <div class="position" data-position="FWD"></div> <!-- Нападающий -->
+    </div>
+
+    <button id="save-lineup">Save Lineup</button>
+</body>
+</html>
