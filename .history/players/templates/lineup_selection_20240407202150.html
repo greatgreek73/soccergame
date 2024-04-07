@@ -42,41 +42,17 @@
                 },
                 drop: function(event, ui) {
                     console.log("Игрок помещен в слот");
-                    var droppedPlayer = ui.draggable;
-                    var droppedPlayerId = droppedPlayer.data('player-id');
-                    var droppedPlayerPosition = droppedPlayer.data('player-position');
-                    var droppedPlayerName = droppedPlayer.text();
+                    if ($(this).find('.player').length === 0) {
+                        var player = ui.draggable;
+                        var playerId = player.data('player-id');
+                        var position = $(this).data('position');
 
-                    // Проверяем, занят ли слот
-                    if ($(this).find('.player').length) {
-                        // Если слот занят, перемещаем уже размещенного игрока обратно в список
-                        var positionedPlayer = $(this).find('.player');
-                        var positionedPlayerId = positionedPlayer.data('player-id');
-                        var positionedPlayerPosition = positionedPlayer.data('player-position');
-                        var positionedPlayerName = positionedPlayer.text();
+                        var playerClone = player.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
+                        playerClone.uniqueId();
+                        $(this).append(playerClone);
 
-                        // Удаляем размещенного игрока из слота
-                        positionedPlayer.remove();
-
-                        // Возвращаем его в список игроков
-                        $('#player-list ul').append('<li class="player" data-player-id="' + positionedPlayerId + '" data-player-position="' + positionedPlayerPosition + '">' + positionedPlayerName + '</li>');
-
-                        // Восстанавливаем перетаскиваемость для возвращенного игрока
-                        $('.player[data-player-id="' + positionedPlayerId + '"]').draggable({
-                            revert: 'invalid',
-                            cursor: 'move',
-                            helper: 'clone',
-                            zIndex: 100
-                        });
+                        player.remove();
                     }
-
-                    // Клонируем перетаскиваемого игрока и размещаем его в слот
-                    var playerClone = droppedPlayer.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
-                                       playerClone.uniqueId();
-                    $(this).empty().append(playerClone);
-
-                    // Удаляем перетаскиваемого игрока из списка
-                    droppedPlayer.remove();
                 }
             });
 
