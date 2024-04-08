@@ -133,9 +133,8 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'C:/newsoccergame/debug.log',
+            'filename': 'logs/newsoccergame.log',
             'formatter': 'verbose',
-            'encoding': 'utf-8',
         },
     },
     'loggers': {

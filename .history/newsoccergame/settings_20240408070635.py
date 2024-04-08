@@ -135,7 +135,6 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': 'C:/newsoccergame/debug.log',
             'formatter': 'verbose',
-            'encoding': 'utf-8',
         },
     },
     'loggers': {

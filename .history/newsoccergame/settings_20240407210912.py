@@ -119,29 +119,17 @@ AUTHENTICATION_BACKENDS = [
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'C:/newsoccergame/debug.log',
-            'formatter': 'verbose',
-            'encoding': 'utf-8',
+            'filename': 'debug.log',
         },
     },
     'loggers': {
-        'newsoccergame': {
+        'django': {
             'handlers': ['file'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': True,
         },
     },

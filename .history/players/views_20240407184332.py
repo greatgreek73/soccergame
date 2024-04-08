@@ -12,7 +12,6 @@ from utils.player_stats_generator import PlayerStatsGenerator
 from utils.config import TOTAL_POINTS, MAIN_STATS_RATIO, KEY_STAT_MULTIPLIERS, MAX_STAT_VALUE
 import json
 from django.views.decorators.csrf import csrf_exempt
-import logging
 
 fake = Faker()
 
@@ -240,33 +239,17 @@ def lineup_selection(request):
 @csrf_exempt
 def save_lineup(request):
     if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            logger = logging.getLogger('newsoccergame')  # Указывает на ваш кастомный логгер
-            logger.info(f"Получены данные состава: {data}")  # Логируем полученные данные
-            
-            lineup_data = data.get('lineup')
-            user = request.user
-            lineup = Lineup.objects.filter(user=user).last()
-            if lineup:
-                LineupPlayer.objects.filter(lineup=lineup).delete()
-                for item in lineup_data:
-                    player_id = item.get('player_id')
-                    position = item.get('position')
-                    player = Player.objects.get(id=player_id)
-                    LineupPlayer.objects.create(lineup=lineup, player=player, position=position)
-            else:
-                lineup = Lineup.objects.create(user=user)
-                for item in lineup_data:
-                    player_id = item.get('player_id')
-                    position = item.get('position')
-                    player = Player.objects.get(id=player_id)
-                    LineupPlayer.objects.create(lineup=lineup, player=player, position=position)
-            
-            logger.info("Состав успешно сохранен.")
-            return JsonResponse({'status': 'success', 'message': 'Состав успешно сохранен'})
-        except Exception as e:
-            logger.error(f"Ошибка при сохранении состава: {e}")
-            return JsonResponse({'error': 'Internal server error'}, status=500)
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Неверный метод запроса'}, status=400)
+        lineup_data = json.loads(request.body)
+        
+        # Создаем новый состав и связываем его с текущим пользователем
+        lineup = Lineup.objects.create(user=request.user)
+        
+        # Сохраняем игроков и их позиции в составе
+        for player_data in lineup_data:
+            player_id = player_data['player_id']
+            position = player_data['position']
+            LineupPlayer.objects.create(lineup=lineup, player_id=player_id, position=position)
+        
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False}, status=400)

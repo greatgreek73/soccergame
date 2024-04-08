@@ -242,8 +242,7 @@ def save_lineup(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            logger = logging.getLogger('newsoccergame')  # Указывает на ваш кастомный логгер
-            logger.info(f"Получены данные состава: {data}")  # Логируем полученные данные
+            logger.debug(f"Получены данные состава: {data}")  # Логируем полученные данные
             
             lineup_data = data.get('lineup')
             user = request.user
@@ -256,16 +255,16 @@ def save_lineup(request):
                     player = Player.objects.get(id=player_id)
                     LineupPlayer.objects.create(lineup=lineup, player=player, position=position)
             else:
-                lineup = Lineup.objects.create(user=user)
+                lineup = Lineup.objects.create()
                 for item in lineup_data:
                     player_id = item.get('player_id')
                     position = item.get('position')
                     player = Player.objects.get(id=player_id)
                     LineupPlayer.objects.create(lineup=lineup, player=player, position=position)
             
-            logger.info("Состав успешно сохранен.")
             return JsonResponse({'status': 'success', 'message': 'Состав успешно сохранен'})
         except Exception as e:
+            # Логируем ошибку
             logger.error(f"Ошибка при сохранении состава: {e}")
             return JsonResponse({'error': 'Internal server error'}, status=500)
     else:

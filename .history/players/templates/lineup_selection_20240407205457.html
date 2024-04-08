@@ -77,14 +77,10 @@
 
                     // Удаляем перетаскиваемого игрока из списка
                     droppedPlayer.remove();
-
-                    // Вызываем функцию автоматического сохранения состава
-                    saveLineupAutomatically();
                 }
             });
 
-            // Функция для автоматического сохранения состава
-            function saveLineupAutomatically() {
+            $('#save-lineup').click(function() {
                 var lineup = [];
                 $('.position').each(function() {
                     var position = $(this).data('position');
@@ -102,13 +98,13 @@
                     data: JSON.stringify({lineup: lineup}),
                     contentType: 'application/json',
                     success: function(response) {
-                        console.log('Состав успешно сохранен автоматически');
+                        alert('Состав успешно сохранен!');
                     },
                     error: function(xhr, status, error) {
-                        console.error('Ошибка при автоматическом сохранении состава: ' + error);
+                        alert('Ошибка при сохранении состава: ' + error);
                     }
                 });
-            }
+            });
         });
     </script>
 </head>
@@ -134,5 +130,6 @@
         <div class="position" data-position="FWD" style="top: 200px; left: 150px;">FWD</div>
     </div>
 
+    <button id="save-lineup">Save Lineup</button>
 </body>
 </html>
