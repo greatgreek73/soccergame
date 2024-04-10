@@ -26,13 +26,23 @@
             font-weight: bold;
             background-color: rgba(0, 0, 0, 0.5); /* Небольшая прозрачность */
         }
+        .custom-draggable-helper {
+            padding: 20px; /* Увеличиваем отступ */
+            background: #f00;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 20px; /* Увеличиваем размер шрифта */
+        }
     </style>
     <script>
         $(document).ready(function() {
             $('.player').draggable({
                 revert: 'invalid',
                 cursor: 'move',
-                helper: 'clone',
+                helper: function(event) {
+                    return $('<div class="custom-draggable-helper">Перетащи меня!</div>');
+                },
                 zIndex: 100
             });
 
@@ -65,7 +75,9 @@
                         $('.player[data-player-id="' + positionedPlayerId + '"]').draggable({
                             revert: 'invalid',
                             cursor: 'move',
-                            helper: 'clone',
+                            helper: function(event) {
+                                return $('<div class="custom-draggable-helper">Перетащи меня!</div>');
+                            },
                             zIndex: 100
                         });
                     }
@@ -79,7 +91,9 @@
                     playerClone.draggable({
                         revert: 'invalid',
                         cursor: 'move',
-                        helper: 'clone',
+                        helper: function(event) {
+                            return $('<div class="custom-draggable-helper">Перетащи меня!</div>');
+                        },
                         zIndex: 100
                     });
 
@@ -107,7 +121,9 @@
                     $('.player[data-player-id="' + droppedPlayerId + '"]').draggable({
                         revert: 'invalid',
                         cursor: 'move',
-                        helper: 'clone',
+                        helper: function(event) {
+                            return $('<div class="custom-draggable-helper">Перетащи меня!</div>');
+                        },
                         zIndex: 100
                     });
                 }
@@ -147,14 +163,6 @@
                 playerClone.uniqueId();
                 $('.position[data-position="{{ position }}"]').empty().append(playerClone);
                 player.remove();
-
-                // Добавляем вызов draggable для playerClone
-                playerClone.draggable({
-                    revert: 'invalid',
-                    cursor: 'move',
-                    helper: 'clone',
-                    zIndex: 100
-                });
             {% endfor %}
         });
     </script>

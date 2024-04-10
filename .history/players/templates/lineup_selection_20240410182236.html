@@ -1,0 +1,196 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lineup Selection</title>
+    <style>
+        .players {
+            float: left;
+            width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .players ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .players li {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin-bottom: 5px;
+            cursor: move;
+        }
+
+        .lineup {
+            float: right;
+            width: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .slot {
+            width: 150px;
+            height: 50px;
+            background-color: #e1e1e1;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slot:before {
+            content: attr(data-position);
+            font-weight: bold;
+        }
+
+        .slot:empty:before {
+            content: attr(data-position) " (Empty)";
+            color: #999;
+        }
+
+        .slot li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        #save-lineup {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #save-lineup:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lineup Selection</h1>
+
+    <div class="players">
+        <h2>Игроки</h2>
+        <ul>
+            {% for player in players %}
+                <li data-player-id="{{ player.id }}" data-position="{{ player.position }}" draggable="true">
+                    {{ player.last_name }} ({{ player.position }})
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="lineup">
+        <div class="slot" data-position="Goalkeeper"></div>
+        <div class="slot" data-position="Right Back"></div>
+        <div class="slot" data-position="Center Back"></div>
+        <div class="slot" data-position="Left Back"></div>
+        <div class="slot" data-position="Right Defender Midfielder"></div>
+        <div class="slot" data-position="Center Defender Midfielder"></div>
+        <div class="slot" data-position="Left Defender Midfielder"></div>
+        <div class="slot" data-position="Right Midfielder"></div>
+        <div class="slot" data-position="Central Midfielder"></div>
+        <div class="slot" data-position="Left Midfielder"></div>
+        <div class="slot" data-position="Attacking Midfielder"></div>
+        <div class="slot" data-position="Center Forward"></div>
+    </div>
+
+    <button id="save-lineup">Сохранить состав</button>
+
+    <script>
+        const players = document.querySelectorAll('.players li');
+        const slots = document.querySelectorAll('.slot');
+        const saveButton = document.getElementById('save-lineup');
+        const csrfToken = '{{ csrf_token }}';
+        const playersList = document.querySelector('.players ul');
+
+        // Восстановление сохраненного состава
+        slots.forEach(slot => {
+            const position = slot.dataset.position;
+            const playerId = selectedPlayers[position];
+            if (playerId) {
+                const player = document.querySelector(`[data-player-id="${playerId}"]`);
+                slot.appendChild(player);
+            }
+        });
+
+        players.forEach(player => {
+            player.addEventListener('dragstart', dragStart);
+            player.addEventListener('dragend', dragEnd);
+        });
+
+        slots.forEach(slot => {
+            slot.addEventListener('dragover', dragOver);
+            slot.addEventListener('drop', dragDrop);
+            slot.addEventListener('dragstart', dragStartSlot);
+        });
+
+        playersList.addEventListener('dragover', dragOver);
+
+        function dragStart(e) {
+            e.dataTransfer.setData('text/plain', e.target.dataset.playerId);
+        }
+
+        function dragEnd(e) {
+            e.preventDefault();
+        }
+
+        function dragOver(e) {
+            e.preventDefault();
+        }
+
+        function dragDrop(e) {
+            e.preventDefault();
+            const playerId = e.dataTransfer.getData('text/plain');
+            const player = document.querySelector(`[data-player-id="${playerId}"]`);
+
+            if (e.target.classList.contains('slot')) {
+                if (e.target.childElementCount === 0) {
+                    e.target.appendChild(player);
+                }
+            } else if (e.target.classList.contains('players')) {
+                e.target.querySelector('ul').appendChild(player);
+            }
+        }
+
+        function dragStartSlot(e) {
+            if (e.target.childElementCount > 0) {
+                const player = e.target.firstElementChild;
+                e.dataTransfer.setData('text/plain', player.dataset.playerId);
+            }
+        }
+
+        saveButton.addEventListener('click', () => {
+            const lineupData = {};
+            slots.forEach(slot => {
+                const position = slot.dataset.position;
+                const player = slot.firstElementChild;
+                lineupData[position] = player ? player.dataset.playerId : null;
+            });
+
+            fetch('/lineup/save/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ lineup: lineupData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Состав успешно сохранен');
+                } else {
+                    alert('Ошибка при сохранении состава');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

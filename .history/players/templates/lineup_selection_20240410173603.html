@@ -147,14 +147,6 @@
                 playerClone.uniqueId();
                 $('.position[data-position="{{ position }}"]').empty().append(playerClone);
                 player.remove();
-
-                // Добавляем вызов draggable для playerClone
-                playerClone.draggable({
-                    revert: 'invalid',
-                    cursor: 'move',
-                    helper: 'clone',
-                    zIndex: 100
-                });
             {% endfor %}
         });
     </script>
