@@ -1,0 +1,167 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lineup Selection</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        #field {
+            background-color: #60A917;
+            width: 400px;
+            height: 300px;
+            position: relative;
+        }
+        .position {
+            width: 90px;
+            height: 90px;
+            border: 2px solid #fff;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5); /* Небольшая прозрачность */
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('.player').draggable({
+                revert: 'invalid',
+                cursor: 'move',
+                helper: 'clone',
+                zIndex: 100
+            });
+
+            $('.position').droppable({
+                accept: function(draggable) {
+                    return true; // Теперь любой игрок может быть перетащен в любой слот
+                },
+                drop: function(event, ui) {
+                    console.log("Игрок помещен в слот");
+                    var droppedPlayer = ui.draggable;
+                    var droppedPlayerId = droppedPlayer.data('player-id');
+                    var droppedPlayerPosition = droppedPlayer.data('player-position');
+                    var droppedPlayerName = droppedPlayer.text();
+
+                    // Проверяем, занят ли слот
+                    if ($(this).find('.player').length) {
+                        var positionedPlayer = $(this).find('.player');
+                        var positionedPlayerId = positionedPlayer.data('player-id');
+                        var positionedPlayerPosition = positionedPlayer.data('player-position');
+                        var positionedPlayerName = positionedPlayer.text();
+
+                        positionedPlayer.remove();
+                        $('#player-list ul').append('<li class="player" data-player-id="' + positionedPlayerId + '" data-player-position="' + positionedPlayerPosition + '">' + positionedPlayerName + '</li>');
+                        $('.player[data-player-id="' + positionedPlayerId + '"]').draggable({
+                            revert: 'invalid',
+                            cursor: 'move',
+                            helper: 'clone',
+                            zIndex: 100
+                        });
+                    }
+
+                    var playerClone = droppedPlayer.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
+                    playerClone.uniqueId();
+                    $(this).empty().append(playerClone);
+                    playerClone.draggable({
+                        revert: 'invalid',
+                        cursor: 'move',
+                        helper: 'clone',
+                        zIndex: 100
+                    });
+
+                    droppedPlayer.remove();
+                    saveLineupAutomatically();
+                }
+            });
+
+            $('#player-list ul').droppable({
+                accept: '.positioned-player',
+                drop: function(event, ui) {
+                    var droppedPlayer = ui.draggable;
+                    var droppedPlayerId = droppedPlayer.data('player-id');
+                    var droppedPlayerPosition = droppedPlayer.data('player-position');
+                    var droppedPlayerName = droppedPlayer.text();
+
+                    droppedPlayer.remove();
+                    $(this).append('<li class="player" data-player-id="' + droppedPlayerId + '" data-player-position="' + droppedPlayerPosition + '">' + droppedPlayerName + '</li>');
+
+                    $('.player[data-player-id="' + droppedPlayerId + '"]').draggable({
+                        revert: 'invalid',
+                        cursor: 'move',
+                        helper: 'clone',
+                        zIndex: 100
+                    });
+
+                    saveLineupAutomatically();
+                }
+            });
+
+            function saveLineupAutomatically() {
+                var lineup = [];
+                $('.position').each(function() {
+                    var position = $(this).data('position');
+                    var player = $(this).find('.positioned-player');
+                    if (player.length > 0) {
+                        var playerId = player.data('player-id');
+                        lineup.push({player_id: playerId, position: position});
+                    }
+                });
+
+                $.ajax({
+                    url: '/lineup/save/',
+                    type: 'POST',
+                    data: JSON.stringify({lineup: lineup}),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log('Состав успешно сохранен автоматически');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Ошибка при автоматическом сохранении состава: ' + error);
+                    }
+                });
+            }
+
+            {% for position, player_id in selected_players.items %}
+                var player = $('.player[data-player-id="{{ player_id }}"]');
+                var playerClone = player.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
+                playerClone.uniqueId();
+                $('.position[data-position="{{ position }}"]').empty().append(playerClone);
+                player.remove();
+
+                playerClone.draggable({
+                    revert: 'invalid',
+                    cursor: 'move',
+                    helper: 'clone',
+                    zIndex: 100
+                });
+            {% endfor %}
+        });
+    </script>
+</head>
+<body>
+    <h1>Lineup Selection</h1>
+
+    <div id="player-list">
+        <h3>Игроки</h3>
+        <ul>
+            {% for player in players %}
+                <li class="player" data-player-id="{{ player.id }}" data-player-position="{{ player.position }}">
+                    {{ player.last_name }} ({{ player.position }})
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="field">
+        <div class="position" data-position="GK" style="top: 100px; left: 150px;">GK</div>
+        <div class="position" data-position="DEF" style="top: 150px; left: 50px;">DEF</div>
+        <div class="position" data-position="MID" style="top: 150px; left: 250px;">MID</div>
+        <div class="position" data-position="FWD" style="top: 200px; left: 150px;">FWD</div>
+    </div>
+</body>
+</html>

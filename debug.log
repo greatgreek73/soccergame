@@ -1,100 +1,87 @@
-INFO 2024-04-08 07:29:46,949 views 22816 22968 Получены данные состава: {'lineup': [{'player_id': 10, 'position': 'GK'}]}
-INFO 2024-04-08 07:29:46,973 views 22816 22968 Состав успешно сохранен.
-INFO 2024-04-08 07:29:48,010 views 22816 22968 Получены данные состава: {'lineup': [{'player_id': 10, 'position': 'GK'}, {'player_id': 14, 'position': 'DEF'}]}
-INFO 2024-04-08 07:29:48,037 views 22816 22968 Состав успешно сохранен.
-INFO 2024-04-08 07:29:48,968 views 22816 22968 Получены данные состава: {'lineup': [{'player_id': 10, 'position': 'GK'}, {'player_id': 14, 'position': 'DEF'}, {'player_id': 12, 'position': 'MID'}]}
-INFO 2024-04-08 07:29:48,993 views 22816 22968 Состав успешно сохранен.
-INFO 2024-04-08 07:29:49,976 views 22816 22968 Получены данные состава: {'lineup': [{'player_id': 10, 'position': 'GK'}, {'player_id': 14, 'position': 'DEF'}, {'player_id': 12, 'position': 'MID'}, {'player_id': 13, 'position': 'FWD'}]}
-INFO 2024-04-08 07:29:50,003 views 22816 22968 Состав успешно сохранен.
-INFO 2024-04-08 07:29:51,226 views 22816 22968 Получены данные состава: {'lineup': [{'player_id': 11, 'position': 'GK'}, {'player_id': 14, 'position': 'DEF'}, {'player_id': 12, 'position': 'MID'}, {'player_id': 13, 'position': 'FWD'}]}
-INFO 2024-04-08 07:29:51,259 views 22816 22968 Состав успешно сохранен.
-INFO 2024-04-09 18:55:15,650 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'DEF'}]}
-INFO 2024-04-09 18:55:15,660 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:55:17,239 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 3, 'position': 'GK'}, {'player_id': 1, 'position': 'DEF'}]}
-INFO 2024-04-09 18:55:17,255 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:55:18,701 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 3, 'position': 'GK'}, {'player_id': 1, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}]}
-INFO 2024-04-09 18:55:18,714 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:55:20,487 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 3, 'position': 'GK'}, {'player_id': 1, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 4, 'position': 'FWD'}]}
-INFO 2024-04-09 18:55:20,512 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:55:22,511 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 2, 'position': 'GK'}, {'player_id': 1, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 4, 'position': 'FWD'}]}
-INFO 2024-04-09 18:55:22,543 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:55:24,290 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 3, 'position': 'GK'}, {'player_id': 1, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 4, 'position': 'FWD'}]}
-INFO 2024-04-09 18:55:24,320 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:57:57,834 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 3, 'position': 'GK'}, {'player_id': 1, 'position': 'DEF'}, {'player_id': 2, 'position': 'MID'}, {'player_id': 4, 'position': 'FWD'}]}
-INFO 2024-04-09 18:57:57,849 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:59:05,161 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 9, 'position': 'DEF'}]}
-INFO 2024-04-09 18:59:05,171 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:59:06,362 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 8, 'position': 'GK'}, {'player_id': 9, 'position': 'DEF'}]}
-INFO 2024-04-09 18:59:06,370 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:59:07,285 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 8, 'position': 'GK'}, {'player_id': 9, 'position': 'DEF'}, {'player_id': 7, 'position': 'FWD'}]}
-INFO 2024-04-09 18:59:07,306 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-09 18:59:08,506 views 24144 12924 Получены данные состава: {'lineup': [{'player_id': 8, 'position': 'GK'}, {'player_id': 9, 'position': 'DEF'}, {'player_id': 6, 'position': 'MID'}, {'player_id': 7, 'position': 'FWD'}]}
-INFO 2024-04-09 18:59:08,523 views 24144 12924 Состав успешно сохранен.
-INFO 2024-04-10 07:04:56,202 views 3892 12820 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}]}
-INFO 2024-04-10 07:04:56,215 views 3892 12820 Состав успешно сохранен.
-INFO 2024-04-10 07:04:57,632 views 3892 12820 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 5, 'position': 'MID'}]}
-INFO 2024-04-10 07:04:57,651 views 3892 12820 Состав успешно сохранен.
-INFO 2024-04-10 07:04:58,852 views 3892 12820 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}]}
-INFO 2024-04-10 07:04:58,873 views 3892 12820 Состав успешно сохранен.
-INFO 2024-04-10 07:04:59,977 views 3892 12820 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:05:00,004 views 3892 12820 Состав успешно сохранен.
-INFO 2024-04-10 07:05:01,893 views 3892 12820 Получены данные состава: {'lineup': [{'player_id': 2, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:05:01,922 views 3892 12820 Состав успешно сохранен.
-INFO 2024-04-10 07:16:24,944 views 24940 14188 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:16:24,985 views 24940 14188 Состав успешно сохранен.
-INFO 2024-04-10 07:35:36,328 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:35:36,369 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:39:17,247 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:39:17,305 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:39:40,250 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:39:40,295 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:39:59,269 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:39:59,327 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:40:00,499 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:40:00,548 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:40:12,814 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:40:12,865 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:40:46,913 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:40:46,963 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:40:50,728 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:40:50,760 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:41:02,063 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 4, 'position': 'GK'}, {'player_id': 1, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 07:41:02,096 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:41:15,256 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'MID'}, {'player_id': 1, 'position': 'FWD'}]}
-INFO 2024-04-10 07:41:15,298 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 07:41:18,769 views 24940 20164 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'MID'}]}
-INFO 2024-04-10 07:41:18,801 views 24940 20164 Состав успешно сохранен.
-INFO 2024-04-10 17:09:35,082 views 15104 4612 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 1, 'position': 'MID'}]}
-INFO 2024-04-10 17:09:35,099 views 15104 4612 Состав успешно сохранен.
-INFO 2024-04-10 17:09:36,152 views 15104 4612 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}]}
-INFO 2024-04-10 17:09:36,177 views 15104 4612 Состав успешно сохранен.
-INFO 2024-04-10 17:09:37,026 views 15104 4612 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 17:09:37,055 views 15104 4612 Состав успешно сохранен.
-INFO 2024-04-10 17:09:38,435 views 15104 4612 Получены данные состава: {'lineup': [{'player_id': 2, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 17:09:38,463 views 15104 4612 Состав успешно сохранен.
-INFO 2024-04-10 17:15:13,745 views 10784 24424 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 17:15:13,772 views 10784 24424 Состав успешно сохранен.
-INFO 2024-04-10 17:17:54,463 views 10784 24424 Получены данные состава: {'lineup': [{'player_id': 2, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 17:17:54,487 views 10784 24424 Состав успешно сохранен.
-INFO 2024-04-10 17:17:58,882 views 10784 24424 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 17:17:58,910 views 10784 24424 Состав успешно сохранен.
-INFO 2024-04-10 17:18:04,052 views 10784 24424 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 17:18:04,074 views 10784 24424 Состав успешно сохранен.
-INFO 2024-04-10 17:36:38,939 views 19988 9092 Получены данные состава: {'lineup': [{'player_id': 3, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 17:36:38,983 views 19988 9092 Состав успешно сохранен.
-INFO 2024-04-10 18:14:59,745 views 15456 14396 Получены данные состава: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 18:14:59,775 views 15456 14396 Состав успешно сохранен.
-INFO 2024-04-10 18:15:11,666 views 15456 14396 Получены данные состава: {'lineup': [{'player_id': 2, 'position': 'DEF'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 6, 'position': 'FWD'}]}
-INFO 2024-04-10 18:15:11,690 views 15456 14396 Состав успешно сохранен.
-INFO 2024-04-10 18:15:15,702 views 15456 14396 Получены данные состава: {'lineup': [{'player_id': 1, 'position': 'MID'}, {'player_id': 2, 'position': 'FWD'}]}
-INFO 2024-04-10 18:15:15,722 views 15456 14396 Состав успешно сохранен.
-INFO 2024-04-10 18:15:19,888 views 15456 14396 Получены данные состава: {'lineup': [{'player_id': 2, 'position': 'MID'}]}
-INFO 2024-04-10 18:15:19,913 views 15456 14396 Состав успешно сохранен.
-INFO 2024-04-10 18:22:49,560 views 15456 28232 Получены данные состава: {'lineup': [{'player_id': 4, 'position': 'GK'}]}
-INFO 2024-04-10 18:22:49,572 views 15456 28232 Состав успешно сохранен.
-INFO 2024-04-10 18:22:50,690 views 15456 28232 Получены данные состава: {'lineup': [{'player_id': 4, 'position': 'GK'}, {'player_id': 6, 'position': 'DEF'}]}
-INFO 2024-04-10 18:22:50,709 views 15456 28232 Состав успешно сохранен.
-INFO 2024-04-10 18:22:57,722 views 15456 28232 Получены данные состава: {'lineup': [{'player_id': 4, 'position': 'GK'}, {'player_id': 6, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}]}
-INFO 2024-04-10 18:22:57,744 views 15456 28232 Состав успешно сохранен.
-INFO 2024-04-10 18:22:58,952 views 15456 28232 Получены данные состава: {'lineup': [{'player_id': 4, 'position': 'GK'}, {'player_id': 6, 'position': 'DEF'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'FWD'}]}
-INFO 2024-04-10 18:22:58,980 views 15456 28232 Состав успешно сохранен.
+DEBUG 2024-04-14 20:15:00,152 views 32736 28480 save_lineup called
+DEBUG 2024-04-14 20:15:00,160 views 32736 28480 Received lineup data: {'lineup': [{'player_id': 3, 'position': 'GK'}]}
+DEBUG 2024-04-14 20:15:00,171 views 32736 28480 Lineup saved successfully
+DEBUG 2024-04-14 20:20:19,293 views 32736 7480 save_lineup called
+DEBUG 2024-04-14 20:20:19,293 views 32736 7480 Received lineup data: {'lineup': []}
+DEBUG 2024-04-14 20:20:19,316 views 32736 7480 Lineup saved successfully
+DEBUG 2024-04-14 20:20:27,029 views 32736 7480 save_lineup called
+DEBUG 2024-04-14 20:20:27,029 views 32736 7480 Received lineup data: {'lineup': []}
+DEBUG 2024-04-14 20:20:27,029 views 32736 7480 Lineup saved successfully
+DEBUG 2024-04-15 19:20:29,918 views 33456 15008 save_lineup called
+DEBUG 2024-04-15 19:20:29,918 views 33456 15008 Received lineup data: {'lineup': []}
+DEBUG 2024-04-15 19:20:29,918 views 33456 15008 Lineup saved successfully
+DEBUG 2024-04-15 19:21:03,102 views 33456 32308 save_lineup called
+DEBUG 2024-04-15 19:21:03,102 views 33456 32308 Received lineup data: {'lineup': []}
+DEBUG 2024-04-15 19:21:03,102 views 33456 32308 Lineup saved successfully
+DEBUG 2024-04-15 19:50:56,723 views 33456 21916 save_lineup called
+DEBUG 2024-04-15 19:50:56,723 views 33456 21916 Received lineup data: {'lineup': []}
+DEBUG 2024-04-15 19:50:56,723 views 33456 21916 Lineup saved successfully
+DEBUG 2024-04-15 21:06:28,196 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:06:28,196 views 33456 12268 Received lineup data: {'lineup': []}
+DEBUG 2024-04-15 21:06:28,205 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:13:50,411 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:13:50,411 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 3, 'position': 'GK'}]}
+DEBUG 2024-04-15 21:13:50,435 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:13:58,225 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:13:58,225 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 3, 'position': 'GK'}, {'player_id': 4, 'position': 'DEF'}]}
+DEBUG 2024-04-15 21:13:58,257 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:05,150 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:05,150 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}]}
+DEBUG 2024-04-15 21:14:05,182 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:10,687 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:10,687 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 2, 'position': 'GK'}]}
+DEBUG 2024-04-15 21:14:10,720 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:11,885 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:11,885 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 2, 'position': 'GK'}, {'player_id': 5, 'position': 'FWD'}]}
+DEBUG 2024-04-15 21:14:11,926 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:16,880 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:16,880 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'FWD'}]}
+DEBUG 2024-04-15 21:14:16,921 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:39,675 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:39,675 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'FWD'}, {'player_id': 3, 'position': 'GK'}]}
+DEBUG 2024-04-15 21:14:39,708 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:41,226 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:41,226 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'FWD'}, {'player_id': 3, 'position': 'GK'}, {'player_id': 1, 'position': 'MID'}]}
+DEBUG 2024-04-15 21:14:41,283 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:48,701 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:48,701 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}]}
+DEBUG 2024-04-15 21:14:48,742 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:14:54,624 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:14:54,624 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 3, 'position': 'GK'}]}
+DEBUG 2024-04-15 21:14:54,680 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:00,253 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:00,253 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'DEF'}, {'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}]}
+DEBUG 2024-04-15 21:15:00,301 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:01,461 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:01,469 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}]}
+DEBUG 2024-04-15 21:15:01,503 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:06,841 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:06,842 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 3, 'position': 'DEF'}]}
+DEBUG 2024-04-15 21:15:06,872 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:08,022 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:08,022 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 3, 'position': 'DEF'}, {'player_id': 2, 'position': 'GK'}]}
+DEBUG 2024-04-15 21:15:08,063 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:20,125 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:20,125 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}, {'player_id': 2, 'position': 'GK'}]}
+DEBUG 2024-04-15 21:15:20,172 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:21,233 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:21,233 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'FWD'}, {'player_id': 1, 'position': 'MID'}]}
+DEBUG 2024-04-15 21:15:21,265 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:22,300 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:22,300 views 33456 12268 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'FWD'}]}
+DEBUG 2024-04-15 21:15:22,333 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:15:23,535 views 33456 12268 save_lineup called
+DEBUG 2024-04-15 21:15:23,535 views 33456 12268 Received lineup data: {'lineup': []}
+DEBUG 2024-04-15 21:15:23,553 views 33456 12268 Lineup saved successfully
+DEBUG 2024-04-15 21:23:13,470 views 33456 22612 save_lineup called
+DEBUG 2024-04-15 21:23:13,478 views 33456 22612 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}]}
+DEBUG 2024-04-15 21:23:13,496 views 33456 22612 Lineup saved successfully
+DEBUG 2024-04-15 21:23:20,213 views 33456 22612 save_lineup called
+DEBUG 2024-04-15 21:23:20,213 views 33456 22612 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 5, 'position': 'DEF'}]}
+DEBUG 2024-04-15 21:23:20,246 views 33456 22612 Lineup saved successfully
+DEBUG 2024-04-15 21:23:21,344 views 33456 22612 save_lineup called
+DEBUG 2024-04-15 21:23:21,352 views 33456 22612 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 5, 'position': 'DEF'}, {'player_id': 2, 'position': 'FWD'}]}
+DEBUG 2024-04-15 21:23:21,393 views 33456 22612 Lineup saved successfully
+DEBUG 2024-04-15 21:23:26,919 views 33456 22612 save_lineup called
+DEBUG 2024-04-15 21:23:26,919 views 33456 22612 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 2, 'position': 'FWD'}]}
+DEBUG 2024-04-15 21:23:26,950 views 33456 22612 Lineup saved successfully

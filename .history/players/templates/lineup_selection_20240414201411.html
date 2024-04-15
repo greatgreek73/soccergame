@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lineup Selection</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        #field {
+            background-color: #60A917;
+            width: 400px;
+            height: 300px;
+            position: relative;
+        }
+        .position {
+            width: 90px;
+            height: 90px;
+            border: 2px solid #fff;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5); /* Небольшая прозрачность */
+        }
+    </style>
+    <script>
+        var lineup = []; // Инициализация массива состава на уровне глобальной переменной
+
+        $(document).ready(function() {
+            $('.player').draggable({
+                revert: 'invalid',
+                cursor: 'move',
+                helper: 'clone',
+                zIndex: 100
+            });
+
+            $('.position').droppable({
+                accept: '.player',
+                drop: function(event, ui) {
+                    var droppedPlayer = ui.draggable;
+                    var droppedPlayerId = droppedPlayer.data('player-id');
+                    var position = $(this).data('position');
+
+                    var existingPlayer = $(this).find('.positioned-player');
+                    if (existingPlayer.length > 0) {
+                        var existingPlayerId = existingPlayer.data('player-id');
+                        // Удаляем существующего игрока из состава
+                        lineup = lineup.filter(item => item.player_id !== existingPlayerId);
+                        existingPlayer.remove();
+                    }
+
+                    // Добавляем нового игрока в состав
+                    lineup.push({ player_id: droppedPlayerId, position: position });
+
+                    var playerClone = droppedPlayer.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
+                    $(this).empty().append(playerClone);
+                    droppedPlayer.remove();
+
+                    saveLineupAutomatically();
+                }
+            });
+
+            $('#player-list ul').droppable({
+                accept: '.positioned-player',
+                drop: function(event, ui) {
+                    var droppedPlayer = ui.draggable;
+                    var droppedPlayerId = droppedPlayer.data('player-id');
+                    // Удаление игрока из состава
+                    lineup = lineup.filter(item => item.player_id !== droppedPlayerId);
+
+                    $(this).append(droppedPlayer);
+                    droppedPlayer.addClass('player').removeClass('positioned-player');
+
+                    saveLineupAutomatically();
+                }
+            });
+
+            function saveLineupAutomatically() {
+                $.ajax({
+                    url: '/lineup/save/',
+                    type: 'POST',
+                    data: JSON.stringify({lineup: lineup}),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log('Состав успешно сохранен автоматически');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Ошибка при автоматическом сохранении состава: ' + error);
+                    }
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Lineup Selection</h1>
+
+    <div id="player-list">
+        <h3>Игроки</h3>
+        <ul>
+            {% for player in players %}
+                <li class="player" data-player-id="{{ player.id }}" data-player-position="{{ player.position }}">
+                    {{ player.last_name }} ({{ player.position }})
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="field">
+        <div class="position" data-position="GK" style="top: 100px; left: 150px;">GK</div>
+        <div class="position" data-position="DEF" style="top: 150px; left: 50px;">DEF</div>
+        <div class="position" data-position="MID" style="top: 150px; left: 250px;">MID</div>
+        <div class="position" data-position="FWD" style="top: 200px; left: 150px;">FWD</div>
+    </div>
+</body>
+</html>
