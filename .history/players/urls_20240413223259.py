@@ -20,5 +20,4 @@ urlpatterns = [
     path('clubs/<int:pk>/increase_capacity/', views.increase_capacity, name='increase_capacity'),
     path('lineup-selection/', views.lineup_selection, name='lineup_selection'),
     path('lineup/save/', views.save_lineup, name='save_lineup'),
-    path('get-lineup/', views.get_lineup, name='get_lineup'),
 ]

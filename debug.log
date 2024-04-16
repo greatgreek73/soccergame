@@ -85,3 +85,84 @@ DEBUG 2024-04-15 21:23:21,393 views 33456 22612 Lineup saved successfully
 DEBUG 2024-04-15 21:23:26,919 views 33456 22612 save_lineup called
 DEBUG 2024-04-15 21:23:26,919 views 33456 22612 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 2, 'position': 'FWD'}]}
 DEBUG 2024-04-15 21:23:26,950 views 33456 22612 Lineup saved successfully
+DEBUG 2024-04-16 18:57:29,540 views 29956 26268 save_lineup called
+DEBUG 2024-04-16 18:57:29,541 views 29956 26268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'MID'}]}
+DEBUG 2024-04-16 18:57:29,560 views 29956 26268 Lineup saved successfully
+DEBUG 2024-04-16 18:57:50,229 views 29956 26268 save_lineup called
+DEBUG 2024-04-16 18:57:50,230 views 29956 26268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'MID'}, {'player_id': 5, 'position': 'DEF'}]}
+DEBUG 2024-04-16 18:57:50,262 views 29956 26268 Lineup saved successfully
+DEBUG 2024-04-16 18:57:57,728 views 29956 26268 save_lineup called
+DEBUG 2024-04-16 18:57:57,728 views 29956 26268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'MID'}, {'player_id': 5, 'position': 'DEF'}]}
+DEBUG 2024-04-16 18:57:57,762 views 29956 26268 Lineup saved successfully
+DEBUG 2024-04-16 18:57:58,940 views 29956 26268 save_lineup called
+DEBUG 2024-04-16 18:57:58,941 views 29956 26268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'MID'}, {'player_id': 5, 'position': 'DEF'}]}
+DEBUG 2024-04-16 18:57:58,968 views 29956 26268 Lineup saved successfully
+DEBUG 2024-04-16 18:58:04,384 views 29956 26268 save_lineup called
+DEBUG 2024-04-16 18:58:04,384 views 29956 26268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'MID'}, {'player_id': 5, 'position': 'DEF'}, {'player_id': 3, 'position': 'GK'}]}
+DEBUG 2024-04-16 18:58:04,415 views 29956 26268 Lineup saved successfully
+DEBUG 2024-04-16 18:58:12,290 views 29956 26268 save_lineup called
+DEBUG 2024-04-16 18:58:12,290 views 29956 26268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'MID'}, {'player_id': 5, 'position': 'DEF'}, {'player_id': 6, 'position': 'GK'}]}
+DEBUG 2024-04-16 18:58:12,333 views 29956 26268 Lineup saved successfully
+DEBUG 2024-04-16 18:58:40,688 views 29956 26268 save_lineup called
+DEBUG 2024-04-16 18:58:40,688 views 29956 26268 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'MID'}, {'player_id': 5, 'position': 'DEF'}, {'player_id': 6, 'position': 'GK'}, {'player_id': 7, 'position': 'FWD'}]}
+DEBUG 2024-04-16 18:58:40,733 views 29956 26268 Lineup saved successfully
+DEBUG 2024-04-16 19:00:32,293 views 5584 25004 save_lineup called
+DEBUG 2024-04-16 19:00:32,294 views 5584 25004 Received lineup data: {'lineup': []}
+DEBUG 2024-04-16 19:00:32,313 views 5584 25004 Lineup saved successfully
+DEBUG 2024-04-16 19:00:39,589 views 5584 25004 save_lineup called
+DEBUG 2024-04-16 19:00:39,589 views 5584 25004 Received lineup data: {'lineup': []}
+DEBUG 2024-04-16 19:00:39,591 views 5584 25004 Lineup saved successfully
+DEBUG 2024-04-16 19:00:44,874 views 5584 25004 save_lineup called
+DEBUG 2024-04-16 19:00:44,874 views 5584 25004 Received lineup data: {'lineup': [{'player_id': 3, 'position': 'GK'}]}
+DEBUG 2024-04-16 19:00:44,896 views 5584 25004 Lineup saved successfully
+DEBUG 2024-04-16 19:05:47,115 views 5584 26956 save_lineup called
+DEBUG 2024-04-16 19:05:47,115 views 5584 26956 Received lineup data: {'lineup': [{'player_id': 3, 'position': 'GK'}]}
+DEBUG 2024-04-16 19:05:47,128 views 5584 26956 Lineup saved successfully
+DEBUG 2024-04-16 19:05:48,001 views 5584 26956 save_lineup called
+DEBUG 2024-04-16 19:05:48,001 views 5584 26956 Received lineup data: {'lineup': []}
+DEBUG 2024-04-16 19:05:48,018 views 5584 26956 Lineup saved successfully
+DEBUG 2024-04-16 19:05:48,992 views 5584 26956 save_lineup called
+DEBUG 2024-04-16 19:05:48,992 views 5584 26956 Received lineup data: {'lineup': []}
+DEBUG 2024-04-16 19:05:49,000 views 5584 26956 Lineup saved successfully
+DEBUG 2024-04-16 19:05:56,289 views 5584 26956 save_lineup called
+DEBUG 2024-04-16 19:05:56,289 views 5584 26956 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'GK'}]}
+DEBUG 2024-04-16 19:05:56,299 views 5584 26956 Lineup saved successfully
+DEBUG 2024-04-16 19:05:57,238 views 5584 26956 save_lineup called
+DEBUG 2024-04-16 19:05:57,238 views 5584 26956 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'GK'}, {'player_id': 6, 'position': 'DEF'}]}
+DEBUG 2024-04-16 19:05:57,263 views 5584 26956 Lineup saved successfully
+DEBUG 2024-04-16 19:05:58,180 views 5584 26956 save_lineup called
+DEBUG 2024-04-16 19:05:58,180 views 5584 26956 Received lineup data: {'lineup': [{'player_id': 4, 'position': 'GK'}, {'player_id': 6, 'position': 'DEF'}, {'player_id': 2, 'position': 'MID'}]}
+DEBUG 2024-04-16 19:05:58,221 views 5584 26956 Lineup saved successfully
+DEBUG 2024-04-16 19:07:19,437 views 28080 4940 save_lineup called
+DEBUG 2024-04-16 19:07:19,437 views 28080 4940 Received lineup data: {'lineup': []}
+DEBUG 2024-04-16 19:07:19,454 views 28080 4940 Lineup saved successfully
+DEBUG 2024-04-16 19:07:37,994 views 28080 4940 save_lineup called
+DEBUG 2024-04-16 19:07:37,994 views 28080 4940 Received lineup data: {'lineup': []}
+DEBUG 2024-04-16 19:07:37,994 views 28080 4940 Lineup saved successfully
+DEBUG 2024-04-16 19:07:38,938 views 28080 4940 save_lineup called
+DEBUG 2024-04-16 19:07:38,938 views 28080 4940 Received lineup data: {'lineup': []}
+DEBUG 2024-04-16 19:07:38,938 views 28080 4940 Lineup saved successfully
+DEBUG 2024-04-16 19:07:41,065 views 28080 4940 save_lineup called
+DEBUG 2024-04-16 19:07:41,065 views 28080 4940 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'GK'}]}
+DEBUG 2024-04-16 19:07:41,088 views 28080 4940 Lineup saved successfully
+DEBUG 2024-04-16 19:07:45,192 views 28080 4940 save_lineup called
+DEBUG 2024-04-16 19:07:45,192 views 28080 4940 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 2, 'position': 'DEF'}]}
+DEBUG 2024-04-16 19:07:45,232 views 28080 4940 Lineup saved successfully
+DEBUG 2024-04-16 19:07:46,210 views 28080 4940 save_lineup called
+DEBUG 2024-04-16 19:07:46,210 views 28080 4940 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'GK'}, {'player_id': 2, 'position': 'DEF'}, {'player_id': 3, 'position': 'MID'}]}
+DEBUG 2024-04-16 19:07:46,250 views 28080 4940 Lineup saved successfully
+DEBUG 2024-04-16 19:07:50,344 views 28080 4940 save_lineup called
+DEBUG 2024-04-16 19:07:50,344 views 28080 4940 Received lineup data: {'lineup': [{'player_id': 2, 'position': 'DEF'}, {'player_id': 3, 'position': 'MID'}]}
+DEBUG 2024-04-16 19:07:50,368 views 28080 4940 Lineup saved successfully
+DEBUG 2024-04-16 19:28:18,752 views 1624 31180 save_lineup called
+DEBUG 2024-04-16 19:28:18,752 views 1624 31180 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}]}
+DEBUG 2024-04-16 19:28:18,768 views 1624 31180 Lineup saved successfully
+DEBUG 2024-04-16 19:32:28,072 views 18380 2996 save_lineup called
+DEBUG 2024-04-16 19:32:28,072 views 18380 2996 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 5, 'position': 'MID'}]}
+DEBUG 2024-04-16 19:32:28,105 views 18380 2996 Lineup saved successfully
+DEBUG 2024-04-16 19:33:28,313 views 30944 18196 save_lineup called
+DEBUG 2024-04-16 19:33:28,313 views 30944 18196 Received lineup data: {'lineup': [{'player_id': 6, 'position': 'GK'}, {'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'DEF'}]}
+DEBUG 2024-04-16 19:33:28,361 views 30944 18196 Lineup saved successfully
+DEBUG 2024-04-16 19:33:34,930 views 30944 18196 save_lineup called
+DEBUG 2024-04-16 19:33:34,930 views 30944 18196 Received lineup data: {'lineup': [{'player_id': 5, 'position': 'MID'}, {'player_id': 3, 'position': 'DEF'}]}
+DEBUG 2024-04-16 19:33:34,963 views 30944 18196 Lineup saved successfully
