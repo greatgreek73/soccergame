@@ -1,0 +1,199 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lineup Selection</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <style>
+        .content-wrapper {
+            display: flex;
+            justify-content: flex-start; /* Изменено для устранения лишнего пространства между элементами */
+        }
+        #player-list {
+            width: 30%; /* Задайте ширину списка игроков */
+            margin-right: 0px; /* Отступ уменьшен до 0 */
+        }
+        #field {
+            background-color: #60A917;
+            width: 500px;
+            height: 600px;
+            position: relative;
+        }
+        .position {
+            width: 90px;
+            height: 90px;
+            border: 2px solid #fff;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5); /* Небольшая прозрачность */
+        }
+    </style>
+    <script>
+        var lineup = []; // Инициализация массива состава на уровне глобальной переменной
+
+        function loadInitialLineup() {
+            $.ajax({
+                url: '/get-lineup/',
+                type: 'GET',
+                success: function(response) {
+                    lineup = response.lineup;
+                    lineup.forEach(function(player) {
+                        var playerElement = $('[data-player-id="' + player.player_id + '"]');
+                        var positionElement = $('.position[data-position="' + player.position + '"]');
+                        var playerClone = playerElement.clone().addClass('positioned-player').removeAttr('style');
+                        positionElement.empty().append(playerClone);
+                        playerElement.remove();
+                        updateDraggable();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error loading the lineup: ' + error);
+                }
+            });
+        }
+
+        function updateDraggable() {
+            $('.positioned-player').draggable({
+                revert: 'invalid',
+                cursor: 'move',
+                helper: 'clone',
+                zIndex: 100
+            });
+        }
+
+        $(document).ready(function() {
+            loadInitialLineup();
+            $('.player').draggable({
+                revert: 'invalid',
+                cursor: 'move',
+                helper: 'clone',
+                zIndex: 100
+            });
+
+            $('.position').droppable({
+                accept: function(draggable) {
+                    return true; // Теперь любой игрок может быть перетащен в любой слот
+                },
+                drop: function(event, ui) {
+                    console.log("Игрок помещен в слот");
+                    var droppedPlayer = ui.draggable;
+                    var droppedPlayerId = droppedPlayer.data('player-id');
+                    var position = $(this).data('position');  // Получаем позицию слота
+
+                    // Удаление предыдущего игрока из этого слота, если он занят
+                    if ($(this).find('.player').length) {
+                        var positionedPlayerId = $(this).find('.player').data('player-id');
+                        lineup = lineup.filter(item => item.player_id !== positionedPlayerId); // Удаление из массива
+                    }
+
+                    // Добавление нового игрока в массив lineup
+                    lineup.push({player_id: droppedPlayerId, position: position});
+
+                    // Клонирование и обновление DOM
+                    var playerClone = droppedPlayer.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
+                    $(this).empty().append(playerClone);
+                    playerClone.draggable({
+                        revert: 'invalid',
+                        cursor: 'move',
+                        helper: 'clone',
+                        zIndex: 100
+                    });
+
+                    droppedPlayer.remove();
+                    saveLineupAutomatically();  // Сохранение состава
+                }
+            });
+
+            $('#player-list ul').droppable({
+                accept: '.positioned-player',
+                drop: function(event, ui) {
+                    var droppedPlayer = ui.draggable;
+                    var playerId = droppedPlayer.data('player-id');
+                    lineup = lineup.filter(item => item.player_id !== playerId); // Update lineup
+                    droppedPlayer.remove();
+                    $(this).append(droppedPlayer);
+                    droppedPlayer.draggable({
+                        revert: 'invalid',
+                        cursor: 'move',
+                        helper: 'clone',
+                        zIndex: 100
+                    });
+                    saveLineupAutomatically();
+                }
+            });
+
+            function saveLineupAutomatically() {
+                // Нет необходимости очищать массив, так как он уже глобальный и обновляется в других функциях
+                $.ajax({
+                    url: '/lineup/save/',
+                    type: 'POST',
+                    data: JSON.stringify({lineup: lineup}),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        console.log('Состав успешно сохранен автоматически');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Ошибка при автоматическом сохранении состава: ' + error);
+                    }
+                });
+            }
+
+            {% for position, player_id in selected_players.items %}
+                var player = $('.player[data-player-id="{{ player_id }}"]');
+                var playerClone = player.clone().removeAttr('style').removeClass('ui-draggable').addClass('positioned-player');
+                playerClone.uniqueId();
+                $('.position[data-position="{{ position }}"]').empty().append(playerClone);
+                player.remove();
+
+                playerClone.draggable({
+                    revert: 'invalid',
+                    cursor: 'move',
+                    helper: 'clone',
+                    zIndex: 100
+                });
+            {% endfor %}
+        });
+    </script>
+</head>
+<body>
+    <h1>Lineup Selection</h1>
+    <div class="content-wrapper"> <!-- Добавлен новый контейнер -->
+        <div id="player-list">
+            <h3>Игроки</h3>
+            <ul>
+                {% for player in players %}
+                    <li class="player" data-player-id="{{ player.id }}" data-player-position="{{ player.position }}">
+                        {{ player.last_name }} ({{ player.position }})
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div id="field">
+            <div class="position" data-position="GK" style="top: 495px; left: 200px;">GK</div>
+            <div class="position" data-position="DEF" style="top: 395px; left: 200px;">CD</div>
+            <div class="position" data-position="DEF" style="top: 395px; left: 300px;">CD</div>
+            <div class="position" data-position="DEF" style="top: 395px; left: 100px;">CD</div>
+            <div class="position" data-position="RB" style="top: 395px; left: 400px;">RB</div>
+            <div class="position" data-position="LB" style="top: 395px; left: 5px;">LB</div>
+            <div class="position" data-position="RDM" style="top: 295px; left: 400px;">RDM</div>
+            <div class="position" data-position="LDM" style="top: 295px; left: 5px;">LDM</div>
+            <div class="position" data-position="MID" style="top: 195px; left: 200px;">MID</div>
+            <div class="position" data-position="FWD" style="top: 5px; left: 200px;">FWD</div>
+            <div class="position" data-position="DMF" style="top: 295px; left: 250px;">DMF</div>
+            <div class="position" data-position="DMF" style="top: 295px; left: 150px;">DMF</div>
+            <div class="position" data-position="AMF" style="top: 95px; left: 200px;">AMF</div>
+
+
+
+        </div>
+    </div>
+</body>
+</html>
